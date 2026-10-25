@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Talos · Launcher V10 (SolidWorks) + slim torpedo</title>
+<style>
+  :root { --bg:#0f1216; --panel:rgba(20,24,30,.9); --fg:#e8ecf1; --mut:#9aa4b2; --acc:#ff7a1a; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; overflow:hidden; }
+  #c { position:fixed; inset:0; display:block; touch-action:none; }
+  #ui { position:fixed; left:10px; top:10px; width:280px; max-height:calc(100% - 20px); overflow:auto; background:var(--panel); border:1px solid #2a313b; border-radius:12px; padding:10px 12px; backdrop-filter:blur(6px); z-index:2; }
+  #ui.min .body { display:none; }
+  h1 { font-size:15px; margin:0 0 2px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .sub { color:var(--mut); font-size:12px; margin-bottom:6px; }
+  .sec { margin:16px 0 4px; padding-top:10px; border-top:1px solid #262d37; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); }
+  label.row { display:flex; align-items:center; gap:8px; padding:2px 0; cursor:pointer; }
+  .sw { width:12px; height:12px; border-radius:3px; display:inline-block; flex:none; }
+  input[type=range] { width:100%; accent-color:var(--acc); }
+  .btns { display:flex; flex-wrap:wrap; gap:6px; }
+  button { background:#262d37; color:var(--fg); border:1px solid #39424f; border-radius:8px; padding:6px 9px; font:inherit; font-size:13px; cursor:pointer; }
+  button:active, button.on { background:var(--acc); border-color:var(--acc); color:#111; }
+  .seg { display:flex; } .seg button { flex:1; border-radius:0; } .seg button:first-child { border-radius:8px 0 0 8px; } .seg button:last-child { border-radius:0 8px 8px 0; }
+  #pick { position:fixed; right:10px; bottom:10px; max-width:60%; background:var(--panel); border:1px solid #2a313b; border-radius:10px; padding:8px 10px; font-size:13px; display:none; z-index:2; }
+  #load { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; color:var(--mut); font-size:15px; pointer-events:none; }
+  table { border-collapse:collapse; width:100%; font-size:12px; } td { padding:2px 0; vertical-align:top; } td:last-child { text-align:right; } td:first-child { color:var(--mut); padding-right:8px; }
+  .lbl { color:#fff; font-size:12px; background:rgba(0,0,0,.55); padding:2px 6px; border-radius:6px; white-space:nowrap; pointer-events:none; }
+  body.mode-torp .robot-only { display:none; } body.mode-robot .torp-only { display:none; }
+  @media (max-width:600px) { #ui { width:calc(100% - 44px); max-height:48%; } }
+</style>
+</head>
+<body class="mode-robot">
+<canvas id="c"></canvas>
+<div id="load">Loading…</div>
+<div id="ui">
+  <h1><span>Talos · Launcher V10</span><button id="minb">–</button></h1>
+  <div class="body">
+    <div class="seg"><button id="mRobot" class="on">On robot</button><button id="mTorp">Torpedo only</button></div>
+    <div class="sub" style="margin-top:6px">Drag to orbit · pinch/scroll to zoom · two-finger/right-drag to pan · tap a part to name it.</div>
+
+    <div class="robot-only">
+      <div class="sec">Show</div>
+      <label class="row"><input type="checkbox" id="tRails" checked><span class="sw" style="background:#4d4d54"></span>Talos mounting rails</label>
+      <label class="row"><input type="checkbox" id="tV9" checked><span class="sw" style="background:#eb8c37"></span>Launcher V10 (SolidWorks)</label>
+      <label class="row"><input type="checkbox" id="tTorps" checked><span class="sw" style="background:#f2731a"></span>Slim torpedoes ×2</label>
+      <label class="row"><input type="checkbox" id="tV8"><span class="sw" style="background:#8c8c99"></span>Launcher V8 + B (old, compare)</label>
+    </div>
+    <div class="torp-only">
+      <div class="sec">Show</div>
+      <label class="row"><input type="checkbox" id="sB" checked><span class="sw" style="background:#3380e6"></span>B, tested (129.5 mm)</label>
+      <label class="row"><input type="checkbox" id="sD18" checked><span class="sw" style="background:#f2731a"></span>Slim Ø18, new (150 mm)</label>
+      <label class="row"><input type="checkbox" id="sC"><span class="sw" style="background:#8cbf4d"></span>C, fat-body alternate</label>
+    </div>
+
+    <div class="sec">Section cut</div>
+    <label class="row"><input type="checkbox" id="clip">Cut along the torpedo axis</label>
+    <input type="range" id="clipx" min="-20" max="20" step="0.25" value="0">
+    <div class="sub">Cut faces are filled where the part is solid (100% infill). Only real voids show hollow: the sealed air cavity, the rear bore, shaft bores.</div>
+
+    <div class="sec">Views</div>
+    <div class="btns robot-only">
+      <button data-v="robot">Overview</button><button data-v="head">Launcher</button><button data-v="side">Side</button>
+      <button data-v="front">Front</button><button data-v="under">Under</button>
+    </div>
+    <div class="btns torp-only">
+      <button data-v="tside">Side</button><button data-v="tiso">3/4</button><button data-v="ttail">Tail</button><button data-v="tnose">Nose</button>
+    </div>
+
+    <div class="robot-only">
+      <div class="sec">Animate</div>
+      <div class="btns"><button id="fireL">Fire left</button><button id="fireR">Fire right</button><button id="dropL">Drop left marker</button><button id="dropR">Drop right marker</button><button id="reset">Reload</button></div>
+    </div>
+
+    <div class="sec">Key numbers</div>
+    <table>
+      <tr><td>Slim torpedo</td><td>150 mm · Ø18 body, no collar · fins Ø30.2 · 35.7 g</td></tr>
+      <tr><td>B (tested)</td><td>129.5 mm · Ø16 body + Ø19.8 collar · fins Ø29.5 · 26.7 g</td></tr>
+      <tr><td>Miss @2 m, 1 mm trim error</td><td>slim 4.6 cm · B 5.9 cm</td></tr>
+      <tr><td>Markers</td><td>P83 · 83 mm · 100% PETG · no metal inserts</td></tr>
+      <tr><td>Launcher</td><td>96 mm aft · same gear train &amp; servo</td></tr>
+      <tr><td>Releases (servo)</td><td>T +51.5° / +111.5° · M −49.75° / −109.75°</td></tr>
+    </table>
+    <div class="sub" style="margin-top:6px">V10 · Native SolidWorks rebuild: torpedo body + marker base + crossbar arm, 96 mm aft, D18 torpedoes + all-PETG P83 markers. Captive nuts throughout (no heat-set inserts), close-fit marker bores in the new Bottom Cover. Fully mated and checked in SolidWorks; not yet printed or pool-tested.</div>
+  </div>
+</div>
+<div id="pick"></div>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+const V = '?v=11';
+const $ = id => document.getElementById(id);
+const canvas = $('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.localClippingEnabled = true;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+const labels = new CSS2DRenderer(); labels.domElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:1';
+document.body.appendChild(labels.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x14202b);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xdfe8ff, 0x223040, 0.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(400, 900, 600); scene.add(sun);
+const camera = new THREE.PerspectiveCamera(40, 1, 1, 20000);
+const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.dampingFactor = 0.08;
+
+// ---------- views ----------
+const P = (x, y, z) => new THREE.Vector3(x, y, z);
+const VIEWS = {
+  robot: [P(1050, 1250, 1750), P(470, 870, 1160)],
+  head:  [P(870, 1110, 1610), P(605, 865, 1220)],
+  side:  [P(1250, 880, 1220), P(600, 880, 1220)],
+  front: [P(600.4, 960, 1900), P(600.4, 900, 1300)],
+  under: [P(780, 600, 1420), P(605, 840, 1200)],
+  tside: [P(360, 0, 95), P(0, 0, 95)],
+  tiso:  [P(230, 160, 230), P(0, 0, 70)],
+  ttail: [P(90, 60, -190), P(0, 0, 20)],
+  tnose: [P(90, 60, 330), P(0, 0, 110)],
+};
+let anim = null;
+function setView(k, instant) {
+  const [p, t] = VIEWS[k];
+  if (instant) { camera.position.copy(p); controls.target.copy(t); anim = null; return; }
+  anim = { p0: camera.position.clone(), t0: controls.target.clone(), p, t, s: performance.now() };
+}
+setView('head', true);
+
+// ---------- section capping (stencil) ----------
+// For each closed part: back faces increment, front faces decrement the stencil (clipped by the
+// cut plane). Where the count is non-zero the cut plane lies inside solid material, so a cap
+// coloured like the part is drawn there, then the stencil is reset for the next part.
+const clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
+let clipOn = false;
+const caps = [];
+let capIndex = 0;
+function addCaps(mesh, color) {
+  const i = ++capIndex;
+  const base = { depthWrite: false, depthTest: false, colorWrite: false, stencilWrite: true, stencilFunc: THREE.AlwaysStencilFunc, clippingPlanes: [clipPlane] };
+  const back = new THREE.Mesh(mesh.geometry, new THREE.MeshBasicMaterial({ ...base, side: THREE.BackSide,
+    stencilFail: THREE.IncrementWrapStencilOp, stencilZFail: THREE.IncrementWrapStencilOp, stencilZPass: THREE.IncrementWrapStencilOp }));
+  const front = new THREE.Mesh(mesh.geometry, new THREE.MeshBasicMaterial({ ...base, side: THREE.FrontSide,
+    stencilFail: THREE.DecrementWrapStencilOp, stencilZFail: THREE.DecrementWrapStencilOp, stencilZPass: THREE.DecrementWrapStencilOp }));
+  back.renderOrder = front.renderOrder = i * 3; back.raycast = front.raycast = () => {};
+  mesh.add(back, front);
+  const c = color.clone().multiplyScalar(0.82);
+  const cap = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), new THREE.MeshStandardMaterial({
+    color: c, metalness: 0.05, roughness: 0.75, side: THREE.DoubleSide,
+    stencilWrite: true, stencilRef: 0, stencilFunc: THREE.NotEqualStencilFunc,
+    stencilFail: THREE.ReplaceStencilOp, stencilZFail: THREE.ReplaceStencilOp, stencilZPass: THREE.ReplaceStencilOp }));
+  cap.renderOrder = i * 3 + 1; cap.raycast = () => {};
+  scene.add(cap);
+  caps.push({ mesh, cap, st: [back, front] });
+}
+function shown(o) { while (o) { if (!o.visible) return false; o = o.parent; } return true; }
+function updateCaps() {
+  const q = new THREE.Vector3(); clipPlane.coplanarPoint(q);
+  for (const k of caps) {
+    const on = clipOn && shown(k.mesh);
+    k.cap.visible = on; k.st[0].visible = k.st[1].visible = on;
+    if (on) { k.cap.position.copy(q); k.cap.lookAt(q.clone().sub(clipPlane.normal)); }
+  }
+}
+
+// ---------- load ----------
+const loader = new GLTFLoader();
+const load = n => new Promise((res, rej) => loader.load(n + '.glb' + V, g => res(g.scene), undefined, rej));
+const pickables = []; const G = {};
+let META = {};
+function prep(root) {
+  const ms = []; root.traverse(o => { if (o.isMesh) ms.push(o); });
+  for (const o of ms) {
+    o.material = o.material.clone(); o.material.side = THREE.DoubleSide; o.material.clippingPlanes = [];
+    o.geometry.computeVertexNormals(); o.renderOrder = 100000; o.material.envMapIntensity = 0.55;
+    pickables.push(o);
+    const m = META[o.name];
+    if (m && m.closed) addCaps(o, new THREE.Color().setRGB(...m.color, THREE.SRGBColorSpace));
+  }
+}
+const torp = {}, markers = {};
+fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
+  return Promise.all(['rails', 'v9', 'torps', 'v8', 'solo'].map(load)); })
+.then(([rails, v9, torps, v8, solo]) => {
+  Object.assign(G, { rails, v9, torps, v8, solo });
+  for (const k in G) { prep(G[k]); scene.add(G[k]); }
+  // torpedo pivots on their own axes for the fire animation
+  for (const side of ['L', 'R']) {
+    const m = torps.getObjectByName('tp__Torpedo_D18_' + side) || torps.getObjectByName('tp__Torpedo_C_' + side);
+    if (!m) continue;
+    const bb = new THREE.Box3().setFromObject(m), c = bb.getCenter(new THREE.Vector3());
+    const pivot = new THREE.Group(); pivot.position.set(c.x, c.y, 0); torps.add(pivot); pivot.attach(m);
+    torp[side] = { pivot, mesh: m, t: null, x: c.x };
+  }
+  for (const side of ['left', 'right']) {
+    const m = v9.getObjectByName('v9__Marker_P83_' + side);
+    if (!m) continue;
+    const pivot = new THREE.Group(); pivot.position.set(side === 'left' ? 582.9145 : 617.9145, 0, 1158.9689);
+    v9.add(pivot); pivot.attach(m); markers[side] = {pivot, t: null, lock: side === 'left' ? -41.54 : -40.685};
+  }
+  // labels on the standalone torpedoes
+  const L = { B: 'B, tested · 129.5 mm', D18: 'Slim Ø18, new · 150 mm', C: 'C, fat-body alternate' };
+  for (const k in L) {
+    const m = solo.getObjectByName('solo__Torpedo_' + k); if (!m) continue;
+    const bb = new THREE.Box3().setFromObject(m); const d = document.createElement('div'); d.className = 'lbl'; d.textContent = L[k];
+    const o = new CSS2DObject(d); const cc = bb.getCenter(new THREE.Vector3()); o.position.set(0, bb.max.y + 8, cc.z); solo.add(o); o.userData.k = k;
+  }
+  syncSolo(); $('load').style.display = 'none';
+  setMode('robot');
+}).catch(e => { $('load').textContent = 'Load failed: ' + e; });
+
+// ---------- UI ----------
+let mode = 'robot';
+function syncSolo() {
+  for (const k of ['B', 'D18', 'C']) {
+    const on = $('s' + k).checked, m = G.solo?.getObjectByName('solo__Torpedo_' + k);
+    if (m) m.visible = on;
+    G.solo?.children.forEach(o => { if (o.userData.k === k) o.visible = on; });
+  }
+}
+function setMode(m) {
+  mode = m; document.body.className = 'mode-' + m;
+  $('mRobot').classList.toggle('on', m === 'robot'); $('mTorp').classList.toggle('on', m === 'torp');
+  G.rails.visible = m === 'robot' && $('tRails').checked;
+  G.v9.visible = m === 'robot' && $('tV9').checked;
+  G.torps.visible = m === 'robot' && $('tTorps').checked;
+  G.v8.visible = m === 'robot' && $('tV8').checked;
+  G.solo.visible = m === 'torp';
+  const s = $('clipx');
+  if (m === 'robot') { const x = torp.L ? torp.L.x : 581; s.min = 555; s.max = 650; s.value = x.toFixed(2); }
+  else { s.min = -20; s.max = 20; s.value = 0; }
+  applyClip(); setView(m === 'robot' ? 'head' : 'tside');
+}
+function applyClip() {
+  clipOn = $('clip').checked; clipPlane.constant = +$('clipx').value;
+  for (const o of pickables) o.material.clippingPlanes = clipOn ? [clipPlane] : [];
+}
+$('mRobot').onclick = () => setMode('robot'); $('mTorp').onclick = () => setMode('torp');
+$('clip').onchange = applyClip;
+$('clipx').oninput = () => { $('clip').checked = true; applyClip(); };
+$('tRails').onchange = e => G.rails && (G.rails.visible = e.target.checked);
+$('tV9').onchange = e => G.v9 && (G.v9.visible = e.target.checked);
+$('tTorps').onchange = e => G.torps && (G.torps.visible = e.target.checked);
+$('tV8').onchange = e => G.v8 && (G.v8.visible = e.target.checked);
+for (const k of ['B', 'D18', 'C']) $('s' + k).onchange = syncSolo;
+document.querySelectorAll('[data-v]').forEach(b => b.onclick = () => setView(b.dataset.v));
+$('minb').onclick = () => { const u = $('ui'); u.classList.toggle('min'); $('minb').textContent = u.classList.contains('min') ? '+' : '–'; };
+
+// fire: bayonet unlock roll, then the spring pushes it out along +Z
+function fire(s) { if (torp[s]) torp[s].t = performance.now(); }
+$('fireL').onclick = () => fire('L'); $('fireR').onclick = () => fire('R');
+$('dropL').onclick = () => { if (markers.left) markers.left.t = performance.now(); };
+$('dropR').onclick = () => { if (markers.right) markers.right.t = performance.now(); };
+$('reset').onclick = () => { for (const m of Object.values(markers)) { m.t = null; m.pivot.rotation.set(0,0,0); m.pivot.position.y = 0; } for (const s in torp) { torp[s].t = null; torp[s].pivot.rotation.set(0, 0, 0); torp[s].pivot.position.z = 0; } };
+function stepTorp(now) {
+  for (const M of Object.values(markers)) {
+    if (M.t == null) continue;
+    const t = (now-M.t)/1000;
+    M.pivot.rotation.y = THREE.MathUtils.degToRad(M.lock) * Math.min(1,t/0.6);
+    const dt = Math.max(0,t-0.7); M.pivot.position.y = -600*dt;
+    if (dt > 4) M.t = null;
+  }
+  for (const s in torp) {
+    const T = torp[s]; if (T.t == null) continue;
+    const t = (now - T.t) / 1000;
+    T.pivot.rotation.z = THREE.MathUtils.degToRad(47) * Math.min(1, t / 0.6);
+    const tt = Math.max(0, t - 0.7); T.pivot.position.z = 600 * tt + 900 * tt * tt;
+    if (T.pivot.position.z > 2500) T.t = null;
+  }
+}
+
+// picking
+const ray = new THREE.Raycaster(); const pickEl = $('pick'); let down = null;
+canvas.addEventListener('pointerdown', e => down = [e.clientX, e.clientY]);
+canvas.addEventListener('pointerup', e => {
+  if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+  const r = canvas.getBoundingClientRect();
+  ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), camera);
+  const hit = ray.intersectObjects(pickables.filter(shown), false).find(h => !(clipOn && clipPlane.distanceToPoint(h.point) < 0));
+  if (!hit) { pickEl.style.display = 'none'; return; }
+  const n = (hit.object.name || '').replace(/^(robot|v9|v8|tp|solo)__/, (m, g) => ({ robot: 'Talos · ', v9: 'V10 · ', v8: 'V8 · ', tp: '', solo: '' }[g])).replace(/_+/g, ' ');
+  pickEl.textContent = n; pickEl.style.display = 'block';
+});
+
+function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labels.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+renderer.setAnimationLoop(now => {
+  if (anim) { const k = Math.min(1, (now - anim.s) / 700), e = k * k * (3 - 2 * k);
+    camera.position.lerpVectors(anim.p0, anim.p, e); controls.target.lerpVectors(anim.t0, anim.t, e); if (k >= 1) anim = null; }
+  stepTorp(now); controls.update(); updateCaps();
+  renderer.render(scene, camera); labels.render(scene, camera);
+});
+</script>
+</body>
+</html>
