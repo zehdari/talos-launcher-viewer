@@ -19,7 +19,7 @@
   "qty": 1,
   "note": "joint face on the bed",
   "steps": [
-   12
+   13
   ],
   "label": "LV11 Marker Base",
   "step_file": "print/LV11 Marker Base PRINT.step",
@@ -32,7 +32,7 @@
   "qty": 1,
   "note": "exit face on the bed; arrows = AMS colour",
   "steps": [
-   10
+   11
   ],
   "label": "LV11 Top Cover",
   "step_file": "print/LV11 Top Cover PRINT.step",
@@ -45,7 +45,7 @@
   "qty": 1,
   "note": "exit face on the bed; arrows = AMS colour",
   "steps": [
-   19
+   20
   ],
   "label": "LV11 Bottom Cover",
   "step_file": "print/LV11 Bottom Cover PRINT.step",
@@ -58,7 +58,7 @@
   "qty": 1,
   "note": "crossbar seat on the bed",
   "steps": [
-   27
+   28
   ],
   "label": "LV11 Crossbar Arm",
   "step_file": "print/LV11 Crossbar Arm PRINT.step",
@@ -71,7 +71,7 @@
   "qty": 1,
   "note": "on its side",
   "steps": [
-   22
+   23
   ],
   "label": "LV11 Servo Holder",
   "step_file": "print/LV11 Servo Holder PRINT.step",
@@ -110,7 +110,7 @@
   "qty": 1,
   "note": "lobe end on the bed",
   "steps": [
-   14
+   15
   ],
   "label": "LV11 Marker Shaft",
   "step_file": "print/LV11 Marker Shaft PRINT.step",
@@ -123,7 +123,7 @@
   "qty": 1,
   "note": "team part, unchanged",
   "steps": [
-   24
+   25
   ],
   "label": "Servogear",
   "step_file": "print/Servogear PRINT.step",
@@ -149,7 +149,7 @@
   "qty": 1,
   "note": "team part, unchanged",
   "steps": [
-   15
+   16
   ],
   "label": "Left Helix Modified",
   "step_file": "print/Left Helix Modified PRINT.step",
@@ -162,7 +162,7 @@
   "qty": 2,
   "note": "tail on the bed",
   "steps": [
-   32
+   33
   ],
   "label": "LV11 Torpedo D18",
   "step_file": "print/LV11 Torpedo D18 PRINT.step",
@@ -175,7 +175,7 @@
   "qty": 2,
   "note": "tail on the bed",
   "steps": [
-   33
+   34
   ],
   "label": "LV11 Marker P83",
   "step_file": "print/LV11 Marker P83 PRINT.step",
@@ -188,7 +188,7 @@
   "qty": 1,
   "note": "team stock",
   "steps": [
-   23
+   24
   ],
   "label": "SER-20XX Servo",
   "link": "https://www.bluetrailengineering.com/"
@@ -200,7 +200,7 @@
   "qty": 2,
   "note": "loaded 22.41 mm",
   "steps": [
-   9
+   10
   ],
   "label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)",
   "link": "https://www.mcmaster.com/9435K123/"
@@ -212,7 +212,7 @@
   "qty": 2,
   "note": "loaded 27.46 mm",
   "steps": [
-   18
+   19
   ],
   "label": "LV11 Spring 9435K123 (marker, loaded 27.46)",
   "link": "https://www.mcmaster.com/9435K123/"
@@ -224,7 +224,7 @@
   "qty": 4,
   "note": "top cover -> body nuts",
   "steps": [
-   11
+   12
   ],
   "label": "FHMS 4-40 x 1 100deg",
   "link": "https://www.mcmaster.com/products/flat-head-screws/"
@@ -236,7 +236,7 @@
   "qty": 1,
   "note": "bottom cover D -> body nut",
   "steps": [
-   21
+   22
   ],
   "label": "FHMS 4-40 x 2-1-2 100deg",
   "link": "https://www.mcmaster.com/products/flat-head-screws/"
@@ -248,7 +248,7 @@
   "qty": 1,
   "note": "bottom cover C -> marker base nut",
   "steps": [
-   20
+   21
   ],
   "label": "FHSCS 4-40 x 2 100deg",
   "link": "https://www.mcmaster.com/products/flat-head-screws/"
@@ -260,7 +260,7 @@
   "qty": 3,
   "note": "marker base -> body",
   "steps": [
-   17
+   18
   ],
   "label": "SHCS 4-40 x 1-1-2",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
@@ -286,7 +286,7 @@
   "steps": [
    1,
    6,
-   13
+   14
   ],
   "label": "Hex Nut 4-40 (91841A005)",
   "link": "https://www.mcmaster.com/91841A005/"
@@ -298,9 +298,21 @@
   "qty": 2,
   "note": "servo holder ears -> body",
   "steps": [
-   26
+   27
   ],
   "label": "SHCS 8-32 x 3-4",
+  "link": "https://www.mcmaster.com/products/socket-head-screws/"
+ },
+ {
+  "name": "Socket head screw 5/16-18 x 2-1/2\", 18-8",
+  "kind": "McMaster",
+  "spec": "5/16-18 x 2-1/2\" SHCS",
+  "qty": 2,
+  "note": "torpedo spring guide, threads into the body from behind",
+  "steps": [
+   9
+  ],
+  "label": "SHCS 5-16-18 x 2-1-2",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
  },
  {
@@ -310,7 +322,7 @@
   "qty": 2,
   "note": "crossbar arm fork -> keel",
   "steps": [
-   31
+   32
   ],
   "label": "SHCS 8-32 x 2-1-2",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
@@ -323,8 +335,8 @@
   "note": "captive in traps",
   "steps": [
    2,
-   28,
-   29
+   29,
+   30
   ],
   "label": "Hex Nut 8-32",
   "link": "https://www.mcmaster.com/products/hex-nuts/"
@@ -336,7 +348,7 @@
   "qty": 2,
   "note": "front crossbar -> crossbar arm nuts (robot fit) (not modelled)",
   "steps": [
-   28
+   29
   ],
   "link": "https://www.mcmaster.com/92196A192/",
   "label": null
@@ -348,7 +360,7 @@
   "qty": 2,
   "note": "rear crossbar -> servo holder slab (not modelled)",
   "steps": [
-   28
+   29
   ],
   "link": "https://www.mcmaster.com/products/socket-head-screws/",
   "label": null
@@ -360,7 +372,7 @@
   "qty": 4,
   "note": "through the servo body (Blue Trail side mount) (not modelled)",
   "steps": [
-   23
+   24
   ],
   "link": "https://www.mcmaster.com/products/socket-head-screws/",
   "label": null
@@ -384,7 +396,7 @@
   "qty": 1,
   "note": "team pin through the left helix and marker shaft (not modelled)",
   "steps": [
-   15
+   16
   ],
   "link": "https://www.mcmaster.com/products/socket-head-screws/",
   "label": null

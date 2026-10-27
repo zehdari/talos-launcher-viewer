@@ -14,7 +14,8 @@
   "Cross-pin nut into the pushing arm pocket.",
   "Pushing arm onto the shaft top, down to the thrust face.",
   "Cross-pin screw through the arm and shaft into the nut.",
-  "Torpedo springs onto their guide pins.",
+  "Spring guide screws 5/16-18 x 2-1/2 in from behind: they thread into the spring floor and their shanks are the torpedo spring pins.",
+  "Torpedo springs onto their guide screws.",
   "Top cover onto the body.",
   "Flat-head 4-40 x 1 screws through the top cover into the captive nuts.",
   "Sub-assembly on the bench: marker base.",
@@ -42,7 +43,7 @@
  ],
  "subs": {
   "LV11 Marker Base": {
-   "mount": 16,
+   "mount": 17,
    "bench": [
     0.0,
     -170.0,
@@ -58,7 +59,7 @@
    ]
   },
   "LV11 Servo Holder": {
-   "mount": 25,
+   "mount": 26,
    "bench": [
     0.0,
     0.0,
@@ -66,7 +67,7 @@
    ]
   },
   "LV11 Crossbar Arm": {
-   "mount": 30,
+   "mount": 31,
    "bench": [
     0.0,
     -170.0,
