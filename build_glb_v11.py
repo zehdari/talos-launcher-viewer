@@ -35,7 +35,7 @@ def plan(n):
                      ('Pushing Arm', (3, u(0, 0, 1), 70)), ('SHCS 4-40 x 5-8', (3, u(c15, s15, 0), 40)),
                      ('Spring 9435K123 (torpedo', (4, u(0, 0, 1), 90)), ('Top Cover', (5, u(0, 0, 1), 90)),
                      ('FHMS 4-40 x 1 ', (5, u(0, 0, 1), 70)), ('Marker Base', (6, u(0, -1, 0), 100)),
-                     ('Marker Shaft', (6, u(0, -1, 0), 100)), ('Left Helix', (6, u(0, -1, 0), 100)),
+                     ('Marker Shaft', (6, u(0, -1, 0), 100)), ('Left Helix', (6, u(0, 1, 0), 60)),
                      ('SHCS 4-40 x 1-1-2', (6, u(0, -1, 0), 70)), ('Spring 9435K123 (marker', (7, u(0, -1, 0), 70)),
                      ('Bottom Cover', (7, u(0, -1, 0), 90)), ('FHSCS 4-40 x 2', (7, u(0, -1, 0), 70)),
                      ('FHMS 4-40 x 2-1-2', (7, u(0, -1, 0), 70)), ('Servo Holder', (8, u(0, 0, -1), 110)),
@@ -100,44 +100,56 @@ for f in sorted(SRC.glob('*.STL')):
 v11.export(OUT / 'v11.glb'); tp.export(OUT / 'torps.glb')
 # ---------- assembly procedure: one exact part per step (several instances of it allowed) ----------
 # (old coarse step, label, instance filter or None, caption)
-SEQ = [(0, 'LV11 Torpedo Body', None, 'Torpedo body: the frame everything mounts to.'),
-       (1, 'Hex Nut 4-40 (91841A005)', None, 'Captive 4-40 nuts into the body traps (top cover x4, marker base x3, bottom cover screw D).'),
-       (1, 'Hex Nut 8-32', {1, 2}, 'Captive 8-32 nuts into the body traps for the servo-holder ears.'),
-       (2, 'Right Helix Modified', None, 'Right helix into its cavity in the body through the marker-base opening (bigger than the bearings, so it goes in before its shaft).'),
-       (2, 'LV11 Torpedo Shaft', None, 'Printed torpedo shaft (18T gear end stays below) up through both bearings and the right helix; pin the helix.'),
-       (3, 'LV11 Pushing Arm', None, 'Pushing arm onto the shaft top, onto the thrust face.'),
-       (3, 'Hex Nut 4-40 (91841A005)', {10}, 'Cross-pin nut into the pushing arm pocket.'),
-       (3, 'SHCS 4-40 x 5-8 (92196A112)', None, 'Cross-pin screw through the arm and shaft into the nut.'),
-       (4, 'LV11 Spring 9435K123 (torpedo, loaded 22.41)', None, 'Torpedo springs onto their guide pins.'),
-       (5, 'LV11 Top Cover', None, 'Top cover onto the body.'),
-       (5, 'FHMS 4-40 x 1 100deg', None, 'Flat-head 4-40 x 1 screws through the top cover into the captive nuts.'),
-       (6, 'Left Helix Modified', None, 'Left helix into the cavity from below, meshing with the right helix (it is bigger than the bearing, so it goes in before its shaft).'),
-       (6, 'Hex Nut 4-40 (91841A005)', {8}, 'Captive 4-40 nut into the marker base for bottom cover screw C.'),
-       (6, 'LV11 Marker Base', None, 'Marker base up to the body joint face.'),
-       (6, 'SHCS 4-40 x 1-1-2', None, 'Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.'),
-       (6, 'LV11 Marker Shaft', None, 'Marker shaft (lobe end down) up through the marker-base bearing into the left helix; pin the helix.'),
-       (7, 'LV11 Spring 9435K123 (marker, loaded 27.46)', None, 'Marker springs onto their guide pins.'),
-       (7, 'LV11 Bottom Cover', None, 'Bottom cover onto the marker base.'),
-       (7, 'FHSCS 4-40 x 2 100deg', None, 'Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.'),
-       (7, 'FHMS 4-40 x 2-1-2 100deg', None, 'Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.'),
-       (8, 'LV11 Servo Holder', None, "Servo holder to the body's rear face."),
-       (8, 'SHCS 8-32 x 3-4', None, 'Socket-head 8-32 x 3/4 screws through the ears into the body nuts.'),
-       (9, 'SER-20XX Servo', None, 'SER-20XX servo onto its seat with 4 M3 through-bolts.'),
-       (9, 'Servogear', None, 'Servo gear onto the spline (meshes with the shaft gear).'),
-       (10, 'LV11 Crossbar Arm', None, 'Crossbar arm onto the body keel.'),
-       (10, 'Hex Nut 8-32', {3, 4}, 'Fork nuts into their recesses (captive nuts before their bolts).'),
-       (10, 'SHCS 8-32 x 2-1-2', None, 'Fork bolts 8-32 x 2-1/2 through the fork and keel into the nuts.'),
-       (10, 'Hex Nut 8-32', {5, 6}, 'Crossbar captive nuts into the side slots (crossbar screws go in on the robot).'),
-       (11, 'LV11 Torpedo D18', None, 'Load the torpedoes through the top cover; twist to lock.'),
-       (11, 'LV11 Marker P83', None, 'Load the markers up into the bottom cover; twist to lock.')]
+MB, PA, HD, XA = 'LV11 Marker Base', 'LV11 Pushing Arm', 'LV11 Servo Holder', 'LV11 Crossbar Arm'
+# (old coarse step, label, instance filter or None, caption, sub-assembly host or None) ; ('MOUNT', host, caption)
+SEQ = [(0, 'LV11 Torpedo Body', None, 'Torpedo body: the frame everything mounts to.', None),
+       (1, 'Hex Nut 4-40 (91841A005)', None, 'Captive 4-40 nuts into the body traps (top cover x4, marker base x3, bottom cover screw D).', None),
+       (1, 'Hex Nut 8-32', {1, 2}, 'Captive 8-32 nuts into the body traps for the servo-holder ears.', None),
+       (2, 'Right Helix Modified', None, 'Right helix into its cavity through the marker-base opening (bigger than the bearings, so it goes in before its shaft).', None),
+       (2, 'LV11 Torpedo Shaft', None, 'Printed torpedo shaft (18T gear end stays below) up through both bearings and the right helix; pin the helix.', None),
+       (3, PA, None, 'Sub-assembly on the bench: pushing arm.', PA),
+       (3, 'Hex Nut 4-40 (91841A005)', {10}, 'Cross-pin nut into the pushing arm pocket.', PA),
+       ('MOUNT', PA, 'Pushing arm onto the shaft top, down to the thrust face.'),
+       (3, 'SHCS 4-40 x 5-8 (92196A112)', None, 'Cross-pin screw through the arm and shaft into the nut.', None),
+       (4, 'LV11 Spring 9435K123 (torpedo, loaded 22.41)', None, 'Torpedo springs onto their guide pins.', None),
+       (5, 'LV11 Top Cover', None, 'Top cover onto the body.', None),
+       (5, 'FHMS 4-40 x 1 100deg', None, 'Flat-head 4-40 x 1 screws through the top cover into the captive nuts.', None),
+       (6, MB, None, 'Sub-assembly on the bench: marker base.', MB),
+       (6, 'Hex Nut 4-40 (91841A005)', {8}, 'Captive 4-40 nut into the marker base for bottom cover screw C.', MB),
+       (6, 'LV11 Marker Shaft', None, 'Marker shaft (lobe end down) up through the marker-base bearing.', MB),
+       (6, 'Left Helix Modified', None, 'Left helix onto the top of the marker shaft; pin it.', MB),
+       ('MOUNT', MB, 'Marker base sub-assembly up to the body: the left helix enters the cavity and meshes with the right helix.'),
+       (6, 'SHCS 4-40 x 1-1-2', None, 'Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.', None),
+       (7, 'LV11 Spring 9435K123 (marker, loaded 27.46)', None, 'Marker springs onto their guide pins.', None),
+       (7, 'LV11 Bottom Cover', None, 'Bottom cover onto the marker base.', None),
+       (7, 'FHSCS 4-40 x 2 100deg', None, 'Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.', None),
+       (7, 'FHMS 4-40 x 2-1-2 100deg', None, 'Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.', None),
+       (8, HD, None, 'Sub-assembly on the bench: servo holder.', HD),
+       (9, 'SER-20XX Servo', None, 'SER-20XX servo onto its seat with 4 M3 through-bolts.', HD),
+       (9, 'Servogear', None, 'Servo gear onto the spline.', HD),
+       ('MOUNT', HD, "Servo holder sub-assembly onto the body's rear face: the servo gear slides into mesh with the shaft gear."),
+       (8, 'SHCS 8-32 x 3-4', None, 'Socket-head 8-32 x 3/4 screws through the ears into the body nuts.', None),
+       (10, XA, None, 'Sub-assembly on the bench: crossbar arm.', XA),
+       (10, 'Hex Nut 8-32', {5, 6}, 'Crossbar captive nuts into the side slots (crossbar screws go in on the robot).', XA),
+       (10, 'Hex Nut 8-32', {3, 4}, 'Fork nuts into their recesses.', XA),
+       ('MOUNT', XA, 'Crossbar arm sub-assembly onto the body keel.'),
+       (10, 'SHCS 8-32 x 2-1-2', None, 'Fork bolts 8-32 x 2-1/2 through the fork and keel into the nuts.', None),
+       (11, 'LV11 Torpedo D18', None, 'Load the torpedoes through the top cover; twist to lock.', None),
+       (11, 'LV11 Marker P83', None, 'Load the markers up into the bottom cover; twist to lock.', None)]
 def newstep(m):
-    for i, (old_st, lab, inst, cap) in enumerate(SEQ):
-        if m['label'] == lab and m['step'] == old_st and (inst is None or m['inst'] in inst): return i
+    for i, e in enumerate(SEQ):
+        if e[0] == 'MOUNT': continue
+        old_st, lab, inst, cap, sub = e
+        if m['label'] == lab and m['step'] == old_st and (inst is None or m['inst'] in inst): return i, sub
     raise SystemExit('no step for ' + m['label'] + ' #' + str(m['inst']))
 for k_, v in meta.items():
-    if 'step' in v: v['step_old'] = v['step']; v['step'] = newstep(v)
-STEPS = [c for *_, c in SEQ]
-STEP_OF = {lab: i for i, (_, lab, _, _) in enumerate(SEQ)}
+    if 'step' in v: v['step_old'] = v['step']; v['step'], v['sub'] = newstep(v)
+STEPS = [e[2] if e[0] == 'MOUNT' else e[3] for e in SEQ]
+STEP_OF = {e[1]: i for i, e in enumerate(SEQ) if e[0] != 'MOUNT'}
+BENCH = {MB: 170, PA: 120, HD: 160, XA: 170}      # bench distance along the host's approach direction
+host_ap = {v['label']: np.array(v['approach']) for v in meta.values() if v.get('label') in BENCH}
+SUBS = {h: dict(mount=next(i for i, e in enumerate(SEQ) if e[0] == 'MOUNT' and e[1] == h),
+                bench=[round(float(x), 3) for x in host_ap[h] / np.linalg.norm(host_ap[h]) * BENCH[h]]) for h in BENCH}
 old = json.load(open(OUT / 'parts.json'))
 meta.update({k: v for k, v in old.items() if k.startswith(('robot__', 'v8__', 'solo__', 'rail'))})
 json.dump(meta, open(OUT / 'parts.json', 'w'), indent=0)
@@ -150,7 +162,7 @@ def coast(m_kg, d_mm, cd): return 0.5 * 1000 * cd * math.pi * (d_mm / 2000) ** 2
 mt, mm = 0.0358 * 1.1, 0.0127 * 1.1                                                             # + ~10 % added mass in water
 phys = dict(slow=25, k=k, torpedo=dict(stroke=FREE - LT, loaded=LT, v0=math.sqrt(2 * 0.41 / mt), c=coast(mt, 18.0, 0.4), tq=math.pi / 2 * math.sqrt(mt / k), base_z=O[2] + 2.918),
             marker=dict(stroke=FREE - LM, loaded=LM, v0=math.sqrt(2 * E_m / mm), c=coast(mm, 13.2, 0.5), tq=math.pi / 2 * math.sqrt(mm / k), top_y=O[1] - 32.98, sink=0.15))
-kin = dict(O=O.tolist(), steps=STEPS, phys=phys,
+kin = dict(O=O.tolist(), steps=STEPS, subs=SUBS, phys=phys,
            axes=dict(shaft=[O[0], O[1]], servo=[O[0], O[1] - 22.5], marker=[O[0], O[2] - 23.0]),
            ratio_servo_to_shaft=-27 / 18,          # shaft angle = -1.5 x servo angle (external spur)
            torpedo=dict(L=dict(axis=[O[0] - TO, O[1] + TO], release=51.5, unlock=47),
@@ -196,7 +208,8 @@ EXTRA = [  # hardware the launcher assembly does not model
     ('Socket head screw 8-32 x 3/8", 18-8', 'McMaster', '92196A192', MC + '92196A192/', 2, 'front crossbar -> crossbar arm nuts (robot fit)', 10),
     ('Screw #8 + nut (team stock)', 'McMaster', '#8, length to suit', CAT['shcs'], 2, 'rear crossbar -> servo holder slab', 10),
     ('Socket head screw M3 x 45 + nut', 'McMaster', 'M3 x 45', CAT['shcs'], 4, 'through the servo body (Blue Trail side mount)', 9),
-    ('Helix cross pin screw #4-40 + nut', 'McMaster', '4-40, length to suit', CAT['shcs'], 2, 'team pins for the right/left helix', 2),
+    ('Right helix cross pin screw #4-40 + nut', 'McMaster', '4-40, length to suit', CAT['shcs'], 1, 'team pin through the right helix and torpedo shaft', 'RH'),
+    ('Left helix cross pin screw #4-40 + nut', 'McMaster', '4-40, length to suit', CAT['shcs'], 1, 'team pin through the left helix and marker shaft', 'LH'),
 ]
 from collections import Counter, defaultdict
 cnt, steps = Counter(), defaultdict(set)
@@ -213,7 +226,7 @@ for lab, (name, kind, spec, link, note) in BOMDEF.items():
         row['step_file'] = f'print/{stem} PRINT.step'; row['stl_file'] = f'print/{stem} PRINT.STL'
     else: row['link'] = link
     bom.append(row)
-EXTRA_AT = {10: [len(SEQ) - 3], 9: [STEP_OF['SER-20XX Servo']], 2: [STEP_OF['LV11 Torpedo Shaft'], STEP_OF['LV11 Marker Shaft']]}
+EXTRA_AT = {10: [STEP_OF['Hex Nut 8-32']] if False else [next(i for i, e in enumerate(SEQ) if e[0] != 'MOUNT' and e[1] == 'Hex Nut 8-32' and e[2] == {5, 6})], 9: [STEP_OF['SER-20XX Servo']], 'RH': [STEP_OF['LV11 Torpedo Shaft']], 'LH': [STEP_OF['Left Helix Modified']]}
 for name, kind, spec, link, q, note, st in EXTRA:
     bom.append(dict(name=name, kind=kind, spec=spec, qty=q, note=note + ' (not modelled)', steps=EXTRA_AT[st], link=link, label=None))
 json.dump(bom, open(OUT / 'bom.json', 'w'), indent=1)

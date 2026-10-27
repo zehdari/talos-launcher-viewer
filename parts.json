@@ -8,7 +8,7 @@
 0.68
 ],
 "faces": 624,
-"step": 10,
+"step": 11,
 "approach": [
 0.0,
 0.0,
@@ -19,7 +19,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 5
+"step_old": 5,
+"sub": null
 },
 "v11__FHMS_4_40_x_1_100deg_2": {
 "group": "v11",
@@ -30,7 +31,7 @@
 0.68
 ],
 "faces": 624,
-"step": 10,
+"step": 11,
 "approach": [
 0.0,
 0.0,
@@ -41,7 +42,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 5
+"step_old": 5,
+"sub": null
 },
 "v11__FHMS_4_40_x_1_100deg_3": {
 "group": "v11",
@@ -52,7 +54,7 @@
 0.68
 ],
 "faces": 624,
-"step": 10,
+"step": 11,
 "approach": [
 0.0,
 0.0,
@@ -63,7 +65,8 @@
 "inst": 3,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 5
+"step_old": 5,
+"sub": null
 },
 "v11__FHMS_4_40_x_1_100deg_4": {
 "group": "v11",
@@ -74,7 +77,7 @@
 0.68
 ],
 "faces": 624,
-"step": 10,
+"step": 11,
 "approach": [
 0.0,
 0.0,
@@ -85,7 +88,8 @@
 "inst": 4,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 5
+"step_old": 5,
+"sub": null
 },
 "v11__FHMS_4_40_x_2_1_2_100deg_1": {
 "group": "v11",
@@ -96,7 +100,7 @@
 0.68
 ],
 "faces": 432,
-"step": 19,
+"step": 21,
 "approach": [
 0.0,
 -70.0,
@@ -107,7 +111,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 7
+"step_old": 7,
+"sub": null
 },
 "v11__FHSCS_4_40_x_2_100deg_1": {
 "group": "v11",
@@ -118,7 +123,7 @@
 0.68
 ],
 "faces": 432,
-"step": 18,
+"step": 20,
 "approach": [
 0.0,
 -70.0,
@@ -129,7 +134,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 7
+"step_old": 7,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_1": {
 "group": "v11",
@@ -151,7 +157,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_10": {
 "group": "v11",
@@ -173,7 +180,8 @@
 "inst": 10,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 3
+"step_old": 3,
+"sub": "LV11 Pushing Arm"
 },
 "v11__Hex_Nut_4_40_91841A005_2": {
 "group": "v11",
@@ -195,7 +203,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_3": {
 "group": "v11",
@@ -217,7 +226,8 @@
 "inst": 3,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_4": {
 "group": "v11",
@@ -239,7 +249,8 @@
 "inst": 4,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_5": {
 "group": "v11",
@@ -261,7 +272,8 @@
 "inst": 5,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_6": {
 "group": "v11",
@@ -283,7 +295,8 @@
 "inst": 6,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_7": {
 "group": "v11",
@@ -305,7 +318,8 @@
 "inst": 7,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_4_40_91841A005_8": {
 "group": "v11",
@@ -316,7 +330,7 @@
 0.68
 ],
 "faces": 428,
-"step": 12,
+"step": 13,
 "approach": [
 0.0,
 30.0,
@@ -327,7 +341,8 @@
 "inst": 8,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": "LV11 Marker Base"
 },
 "v11__Hex_Nut_4_40_91841A005_9": {
 "group": "v11",
@@ -349,7 +364,8 @@
 "inst": 9,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_8_32_1": {
 "group": "v11",
@@ -371,7 +387,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_8_32_2": {
 "group": "v11",
@@ -393,7 +410,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 1
+"step_old": 1,
+"sub": null
 },
 "v11__Hex_Nut_8_32_3": {
 "group": "v11",
@@ -404,7 +422,7 @@
 0.68
 ],
 "faces": 440,
-"step": 25,
+"step": 29,
 "approach": [
 -35.0,
 0.0,
@@ -415,7 +433,8 @@
 "inst": 3,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": "LV11 Crossbar Arm"
 },
 "v11__Hex_Nut_8_32_4": {
 "group": "v11",
@@ -426,7 +445,7 @@
 0.68
 ],
 "faces": 440,
-"step": 25,
+"step": 29,
 "approach": [
 -35.0,
 0.0,
@@ -437,7 +456,8 @@
 "inst": 4,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": "LV11 Crossbar Arm"
 },
 "v11__Hex_Nut_8_32_5": {
 "group": "v11",
@@ -448,7 +468,7 @@
 0.68
 ],
 "faces": 440,
-"step": 27,
+"step": 28,
 "approach": [
 -30.0,
 0.0,
@@ -459,7 +479,8 @@
 "inst": 5,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": "LV11 Crossbar Arm"
 },
 "v11__Hex_Nut_8_32_6": {
 "group": "v11",
@@ -470,7 +491,7 @@
 0.68
 ],
 "faces": 440,
-"step": 27,
+"step": 28,
 "approach": [
 30.0,
 0.0,
@@ -481,7 +502,8 @@
 "inst": 6,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": "LV11 Crossbar Arm"
 },
 "v11__LV11_Bottom_Cover_1": {
 "group": "v11",
@@ -492,7 +514,7 @@
 0.47
 ],
 "faces": 5142,
-"step": 17,
+"step": 19,
 "approach": [
 0.0,
 -90.0,
@@ -503,7 +525,8 @@
 "inst": 1,
 "cat": "Structure",
 "spring": null,
-"step_old": 7
+"step_old": 7,
+"sub": null
 },
 "v11__LV11_Crossbar_Arm_1": {
 "group": "v11",
@@ -514,7 +537,7 @@
 0.8
 ],
 "faces": 4136,
-"step": 24,
+"step": 27,
 "approach": [
 0.0,
 -100.0,
@@ -525,7 +548,8 @@
 "inst": 1,
 "cat": "Structure",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": "LV11 Crossbar Arm"
 },
 "v11__LV11_Marker_Base_1": {
 "group": "v11",
@@ -536,7 +560,7 @@
 0.86
 ],
 "faces": 11330,
-"step": 13,
+"step": 12,
 "approach": [
 0.0,
 -100.0,
@@ -547,7 +571,8 @@
 "inst": 1,
 "cat": "Structure",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": "LV11 Marker Base"
 },
 "v11__Marker_P83_left": {
 "group": "v11",
@@ -558,7 +583,7 @@
 0.84
 ],
 "faces": 6832,
-"step": 29,
+"step": 33,
 "approach": [
 0.0,
 -130.0,
@@ -569,7 +594,8 @@
 "inst": 1,
 "cat": "Payloads + springs",
 "spring": null,
-"step_old": 11
+"step_old": 11,
+"sub": null
 },
 "v11__Marker_P83_right": {
 "group": "v11",
@@ -580,7 +606,7 @@
 0.84
 ],
 "faces": 6832,
-"step": 29,
+"step": 33,
 "approach": [
 0.0,
 -130.0,
@@ -591,7 +617,8 @@
 "inst": 2,
 "cat": "Payloads + springs",
 "spring": null,
-"step_old": 11
+"step_old": 11,
+"sub": null
 },
 "v11__LV11_Marker_Shaft_1": {
 "group": "v11",
@@ -602,7 +629,7 @@
 0.97
 ],
 "faces": 1682,
-"step": 15,
+"step": 14,
 "approach": [
 0.0,
 -100.0,
@@ -613,7 +640,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": "LV11 Marker Base"
 },
 "v11__LV11_Pushing_Arm_1": {
 "group": "v11",
@@ -635,7 +663,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 3
+"step_old": 3,
+"sub": "LV11 Pushing Arm"
 },
 "v11__LV11_Servo_Holder_1": {
 "group": "v11",
@@ -646,7 +675,7 @@
 0.59
 ],
 "faces": 4790,
-"step": 20,
+"step": 22,
 "approach": [
 0.0,
 0.0,
@@ -657,7 +686,8 @@
 "inst": 1,
 "cat": "Structure",
 "spring": null,
-"step_old": 8
+"step_old": 8,
+"sub": "LV11 Servo Holder"
 },
 "v11__LV11_Spring_9435K123_marker_loaded_27_46_1": {
 "group": "v11",
@@ -668,7 +698,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 16,
+"step": 18,
 "approach": [
 0.0,
 -70.0,
@@ -682,7 +712,8 @@
 "kind": "marker",
 "side": "left"
 },
-"step_old": 7
+"step_old": 7,
+"sub": null
 },
 "v11__LV11_Spring_9435K123_marker_loaded_27_46_2": {
 "group": "v11",
@@ -693,7 +724,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 16,
+"step": 18,
 "approach": [
 0.0,
 -70.0,
@@ -707,7 +738,8 @@
 "kind": "marker",
 "side": "right"
 },
-"step_old": 7
+"step_old": 7,
+"sub": null
 },
 "v11__LV11_Spring_9435K123_torpedo_loaded_22_41_1": {
 "group": "v11",
@@ -718,7 +750,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 8,
+"step": 9,
 "approach": [
 0.0,
 0.0,
@@ -732,7 +764,8 @@
 "kind": "torpedo",
 "side": "L"
 },
-"step_old": 4
+"step_old": 4,
+"sub": null
 },
 "v11__LV11_Spring_9435K123_torpedo_loaded_22_41_2": {
 "group": "v11",
@@ -743,7 +776,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 8,
+"step": 9,
 "approach": [
 0.0,
 0.0,
@@ -757,7 +790,8 @@
 "kind": "torpedo",
 "side": "R"
 },
-"step_old": 4
+"step_old": 4,
+"sub": null
 },
 "v11__LV11_Top_Cover_2": {
 "group": "v11",
@@ -768,7 +802,7 @@
 0.35
 ],
 "faces": 6366,
-"step": 9,
+"step": 10,
 "approach": [
 0.0,
 0.0,
@@ -779,7 +813,8 @@
 "inst": 2,
 "cat": "Structure",
 "spring": null,
-"step_old": 5
+"step_old": 5,
+"sub": null
 },
 "v11__LV11_Torpedo_Body_1": {
 "group": "v11",
@@ -801,7 +836,8 @@
 "inst": 1,
 "cat": "Structure",
 "spring": null,
-"step_old": 0
+"step_old": 0,
+"sub": null
 },
 "tp__Torpedo_D18_L": {
 "group": "torps",
@@ -812,7 +848,7 @@
 0.16
 ],
 "faces": 10170,
-"step": 28,
+"step": 32,
 "approach": [
 0.0,
 0.0,
@@ -823,7 +859,8 @@
 "inst": 1,
 "cat": "Payloads + springs",
 "spring": null,
-"step_old": 11
+"step_old": 11,
+"sub": null
 },
 "tp__Torpedo_D18_R": {
 "group": "torps",
@@ -834,7 +871,7 @@
 0.16
 ],
 "faces": 10170,
-"step": 28,
+"step": 32,
 "approach": [
 0.0,
 0.0,
@@ -845,7 +882,8 @@
 "inst": 2,
 "cat": "Payloads + springs",
 "spring": null,
-"step_old": 11
+"step_old": 11,
+"sub": null
 },
 "v11__LV11_Torpedo_Shaft_1": {
 "group": "v11",
@@ -867,7 +905,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 2
+"step_old": 2,
+"sub": null
 },
 "v11__Left_Helix_Modified_1": {
 "group": "v11",
@@ -878,10 +917,10 @@
 0.3
 ],
 "faces": 16148,
-"step": 11,
+"step": 15,
 "approach": [
 0.0,
--100.0,
+60.0,
 0.0
 ],
 "rot": "marker",
@@ -889,7 +928,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": "LV11 Marker Base"
 },
 "v11__Right_Helix_Modified_1": {
 "group": "v11",
@@ -911,7 +951,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 2
+"step_old": 2,
+"sub": null
 },
 "v11__SER_20XX_Servo_1": {
 "group": "v11",
@@ -922,7 +963,7 @@
 0.13
 ],
 "faces": 39995,
-"step": 22,
+"step": 23,
 "approach": [
 0.0,
 80.0,
@@ -933,7 +974,8 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 9
+"step_old": 9,
+"sub": "LV11 Servo Holder"
 },
 "v11__SHCS_4_40_x_1_1_2_1": {
 "group": "v11",
@@ -944,7 +986,7 @@
 0.68
 ],
 "faces": 598,
-"step": 14,
+"step": 17,
 "approach": [
 0.0,
 -70.0,
@@ -955,7 +997,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": null
 },
 "v11__SHCS_4_40_x_1_1_2_2": {
 "group": "v11",
@@ -966,7 +1009,7 @@
 0.68
 ],
 "faces": 598,
-"step": 14,
+"step": 17,
 "approach": [
 0.0,
 -70.0,
@@ -977,7 +1020,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": null
 },
 "v11__SHCS_4_40_x_1_1_2_3": {
 "group": "v11",
@@ -988,7 +1032,7 @@
 0.68
 ],
 "faces": 598,
-"step": 14,
+"step": 17,
 "approach": [
 0.0,
 -70.0,
@@ -999,7 +1043,8 @@
 "inst": 3,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 6
+"step_old": 6,
+"sub": null
 },
 "v11__SHCS_4_40_x_5_8_92196A112_1": {
 "group": "v11",
@@ -1010,7 +1055,7 @@
 0.68
 ],
 "faces": 710,
-"step": 7,
+"step": 8,
 "approach": [
 38.637,
 10.353,
@@ -1021,7 +1066,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 3
+"step_old": 3,
+"sub": null
 },
 "v11__SHCS_8_32_x_2_1_2_1": {
 "group": "v11",
@@ -1032,7 +1078,7 @@
 0.68
 ],
 "faces": 598,
-"step": 26,
+"step": 31,
 "approach": [
 70.0,
 0.0,
@@ -1043,7 +1089,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": null
 },
 "v11__SHCS_8_32_x_2_1_2_2": {
 "group": "v11",
@@ -1054,7 +1101,7 @@
 0.68
 ],
 "faces": 598,
-"step": 26,
+"step": 31,
 "approach": [
 70.0,
 0.0,
@@ -1065,7 +1112,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 10
+"step_old": 10,
+"sub": null
 },
 "v11__SHCS_8_32_x_3_4_1": {
 "group": "v11",
@@ -1076,7 +1124,7 @@
 0.68
 ],
 "faces": 734,
-"step": 21,
+"step": 26,
 "approach": [
 0.0,
 0.0,
@@ -1087,7 +1135,8 @@
 "inst": 1,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 8
+"step_old": 8,
+"sub": null
 },
 "v11__SHCS_8_32_x_3_4_2": {
 "group": "v11",
@@ -1098,7 +1147,7 @@
 0.68
 ],
 "faces": 734,
-"step": 21,
+"step": 26,
 "approach": [
 0.0,
 0.0,
@@ -1109,7 +1158,8 @@
 "inst": 2,
 "cat": "Fasteners",
 "spring": null,
-"step_old": 8
+"step_old": 8,
+"sub": null
 },
 "v11__Servogear_1": {
 "group": "v11",
@@ -1120,7 +1170,7 @@
 0.3
 ],
 "faces": 6624,
-"step": 23,
+"step": 24,
 "approach": [
 0.0,
 0.0,
@@ -1131,6 +1181,7 @@
 "inst": 1,
 "cat": "Drivetrain",
 "spring": null,
-"step_old": 9
+"step_old": 9,
+"sub": "LV11 Servo Holder"
 }
 }

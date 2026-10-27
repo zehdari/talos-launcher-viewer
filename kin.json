@@ -8,34 +8,72 @@
   "Torpedo body: the frame everything mounts to.",
   "Captive 4-40 nuts into the body traps (top cover x4, marker base x3, bottom cover screw D).",
   "Captive 8-32 nuts into the body traps for the servo-holder ears.",
-  "Right helix into its cavity in the body through the marker-base opening (bigger than the bearings, so it goes in before its shaft).",
+  "Right helix into its cavity through the marker-base opening (bigger than the bearings, so it goes in before its shaft).",
   "Printed torpedo shaft (18T gear end stays below) up through both bearings and the right helix; pin the helix.",
-  "Pushing arm onto the shaft top, onto the thrust face.",
+  "Sub-assembly on the bench: pushing arm.",
   "Cross-pin nut into the pushing arm pocket.",
+  "Pushing arm onto the shaft top, down to the thrust face.",
   "Cross-pin screw through the arm and shaft into the nut.",
   "Torpedo springs onto their guide pins.",
   "Top cover onto the body.",
   "Flat-head 4-40 x 1 screws through the top cover into the captive nuts.",
-  "Left helix into the cavity from below, meshing with the right helix (it is bigger than the bearing, so it goes in before its shaft).",
+  "Sub-assembly on the bench: marker base.",
   "Captive 4-40 nut into the marker base for bottom cover screw C.",
-  "Marker base up to the body joint face.",
+  "Marker shaft (lobe end down) up through the marker-base bearing.",
+  "Left helix onto the top of the marker shaft; pin it.",
+  "Marker base sub-assembly up to the body: the left helix enters the cavity and meshes with the right helix.",
   "Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.",
-  "Marker shaft (lobe end down) up through the marker-base bearing into the left helix; pin the helix.",
   "Marker springs onto their guide pins.",
   "Bottom cover onto the marker base.",
   "Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.",
   "Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.",
-  "Servo holder to the body's rear face.",
-  "Socket-head 8-32 x 3/4 screws through the ears into the body nuts.",
+  "Sub-assembly on the bench: servo holder.",
   "SER-20XX servo onto its seat with 4 M3 through-bolts.",
-  "Servo gear onto the spline (meshes with the shaft gear).",
-  "Crossbar arm onto the body keel.",
-  "Fork nuts into their recesses (captive nuts before their bolts).",
-  "Fork bolts 8-32 x 2-1/2 through the fork and keel into the nuts.",
+  "Servo gear onto the spline.",
+  "Servo holder sub-assembly onto the body's rear face: the servo gear slides into mesh with the shaft gear.",
+  "Socket-head 8-32 x 3/4 screws through the ears into the body nuts.",
+  "Sub-assembly on the bench: crossbar arm.",
   "Crossbar captive nuts into the side slots (crossbar screws go in on the robot).",
+  "Fork nuts into their recesses.",
+  "Crossbar arm sub-assembly onto the body keel.",
+  "Fork bolts 8-32 x 2-1/2 through the fork and keel into the nuts.",
   "Load the torpedoes through the top cover; twist to lock.",
   "Load the markers up into the bottom cover; twist to lock."
  ],
+ "subs": {
+  "LV11 Marker Base": {
+   "mount": 16,
+   "bench": [
+    0.0,
+    -170.0,
+    0.0
+   ]
+  },
+  "LV11 Pushing Arm": {
+   "mount": 7,
+   "bench": [
+    0.0,
+    0.0,
+    120.0
+   ]
+  },
+  "LV11 Servo Holder": {
+   "mount": 25,
+   "bench": [
+    0.0,
+    0.0,
+    -160.0
+   ]
+  },
+  "LV11 Crossbar Arm": {
+   "mount": 30,
+   "bench": [
+    0.0,
+    -170.0,
+    0.0
+   ]
+  }
+ },
  "phys": {
   "slow": 25,
   "k": 3330.9488614044976,
