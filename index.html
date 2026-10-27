@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Talos · Launcher V10 (SolidWorks) + slim torpedo</title>
+<title>Talos · Launcher V11 (SolidWorks)</title>
 <style>
   :root { --bg:#0f1216; --panel:rgba(20,24,30,.9); --fg:#e8ecf1; --mut:#9aa4b2; --acc:#ff7a1a; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; overflow:hidden; }
@@ -32,7 +32,7 @@
 <canvas id="c"></canvas>
 <div id="load">Loading…</div>
 <div id="ui">
-  <h1><span>Talos · Launcher V10</span><button id="minb">–</button></h1>
+  <h1><span>Talos · Launcher V11</span><button id="minb">–</button></h1>
   <div class="body">
     <div class="seg"><button id="mRobot" class="on">On robot</button><button id="mTorp">Torpedo only</button></div>
     <div class="sub" style="margin-top:6px">Drag to orbit · pinch/scroll to zoom · two-finger/right-drag to pan · tap a part to name it.</div>
@@ -40,7 +40,7 @@
     <div class="robot-only">
       <div class="sec">Show</div>
       <label class="row"><input type="checkbox" id="tRails" checked><span class="sw" style="background:#4d4d54"></span>Talos mounting rails</label>
-      <label class="row"><input type="checkbox" id="tV9" checked><span class="sw" style="background:#eb8c37"></span>Launcher V10 (SolidWorks)</label>
+      <label class="row"><input type="checkbox" id="tV9" checked><span class="sw" style="background:#eb8c37"></span>Launcher V11 (SolidWorks)</label>
       <label class="row"><input type="checkbox" id="tTorps" checked><span class="sw" style="background:#f2731a"></span>Slim torpedoes ×2</label>
       <label class="row"><input type="checkbox" id="tV8"><span class="sw" style="background:#8c8c99"></span>Launcher V8 + B (old, compare)</label>
     </div>
@@ -59,27 +59,33 @@
     <div class="sec">Views</div>
     <div class="btns robot-only">
       <button data-v="robot">Overview</button><button data-v="head">Launcher</button><button data-v="side">Side</button>
-      <button data-v="front">Front</button><button data-v="under">Under</button>
+      <button data-v="front">Front</button><button data-v="under">Under</button><button data-v="gears">Gear train</button>
     </div>
     <div class="btns torp-only">
       <button data-v="tside">Side</button><button data-v="tiso">3/4</button><button data-v="ttail">Tail</button><button data-v="tnose">Nose</button>
     </div>
 
     <div class="robot-only">
-      <div class="sec">Animate</div>
-      <div class="btns"><button id="fireL">Fire left</button><button id="fireR">Fire right</button><button id="dropL">Drop left marker</button><button id="dropR">Drop right marker</button><button id="reset">Reload</button></div>
+      <div class="sec">Fire (servo drives the gear train)</div>
+      <div class="btns"><button id="fireL">Fire left</button><button id="fireR">Fire right</button><button id="dropR">Drop right marker</button><button id="dropL">Drop left marker</button><button id="reset">Reload</button></div>
+      <div class="sub" id="servoTxt" style="margin-top:6px">Servo 0.0° · torpedo shaft 0.0° · marker shaft 0.0°</div>
+      <div class="sub">Servo 27T → shaft 18T (1.5:1), helix pair 20:20 to the marker shaft. One direction fires left then right torpedo, the other right then left marker, so firing the second one passes the first.</div>
+      <div class="sec">Assembly procedure</div>
+      <div class="btns"><button id="aPrev">◀</button><button id="aPlay">▶ Play</button><button id="aNext">▶|</button><button id="aDone">Done</button></div>
+      <div class="sub" id="asmTxt" style="margin-top:6px">Step through how the launcher goes together.</div>
     </div>
 
     <div class="sec">Key numbers</div>
     <table>
-      <tr><td>Slim torpedo</td><td>150 mm · Ø18 body, no collar · fins Ø30.2 · 35.7 g</td></tr>
-      <tr><td>B (tested)</td><td>129.5 mm · Ø16 body + Ø19.8 collar · fins Ø29.5 · 26.7 g</td></tr>
-      <tr><td>Miss @2 m, 1 mm trim error</td><td>slim 4.6 cm · B 5.9 cm</td></tr>
-      <tr><td>Markers</td><td>P83 · 83 mm · 100% PETG · no metal inserts</td></tr>
-      <tr><td>Launcher</td><td>96 mm aft · same gear train &amp; servo</td></tr>
+      <tr><td>Launcher printed parts</td><td>608 g at 100% infill (PETG)</td></tr>
+      <tr><td>Torpedo body</td><td>243 g (V10 296) · open tube windows</td></tr>
+      <tr><td>Crossbar arm / servo holder</td><td>79 g / 85 g (V10 115 / 100)</td></tr>
+      <tr><td>Gears</td><td>team gears, team positions · spur CD 22.5</td></tr>
+      <tr><td>Torpedo shaft</td><td>printed PETG with its 18T gear</td></tr>
       <tr><td>Releases (servo)</td><td>T +51.5° / +111.5° · M −49.75° / −109.75°</td></tr>
+      <tr><td>Torpedo / marker</td><td>D18 150 mm 35.8 g · P83 83 mm 12.7 g</td></tr>
     </table>
-    <div class="sub" style="margin-top:6px">V10 · Native SolidWorks rebuild: torpedo body + marker base + crossbar arm, 96 mm aft, D18 torpedoes + all-PETG P83 markers. Captive nuts throughout (no heat-set inserts), close-fit marker bores in the new Bottom Cover. Fully mated and checked in SolidWorks; not yet printed or pool-tested.</div>
+    <div class="sub" style="margin-top:6px">V11 · Clean native SolidWorks rebuild (fully defined sketches, mated assembly + robot fit). PETG fits for P1S/P2S, lighter parts at 100% infill with pockets open to the water, captive nuts throughout. Checked in SolidWorks (interference, motion sweep, robot fit); not yet printed or pool-tested.</div>
   </div>
 </div>
 <div id="pick"></div>
@@ -94,7 +100,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=11';
+const V = '?v=12';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -119,6 +125,7 @@ const VIEWS = {
   side:  [P(1250, 880, 1220), P(600, 880, 1220)],
   front: [P(600.4, 960, 1900), P(600.4, 900, 1300)],
   under: [P(780, 600, 1420), P(605, 840, 1200)],
+  gears: [P(520, 990, 1035), P(600.4, 876, 1138)],
   tside: [P(360, 0, 95), P(0, 0, 95)],
   tiso:  [P(230, 160, 230), P(0, 0, 70)],
   ttail: [P(90, 60, -190), P(0, 0, 20)],
@@ -183,26 +190,33 @@ function prep(root) {
     if (m && m.closed) addCaps(o, new THREE.Color().setRGB(...m.color, THREE.SRGBColorSpace));
   }
 }
-const torp = {}, markers = {};
+const torp = {}, markers = {}, ROT = {}, ASM = []; let KIN = null;
 fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
-  return Promise.all(['rails', 'v9', 'torps', 'v8', 'solo'].map(load)); })
-.then(([rails, v9, torps, v8, solo]) => {
-  Object.assign(G, { rails, v9, torps, v8, solo });
+  return Promise.all([fetch('kin.json' + V).then(r => r.json()), ...['rails', 'v11', 'torps', 'v8', 'solo'].map(load)]); })
+.then(([kin, rails, v11, torps, v8, solo]) => {
+  KIN = kin; Object.assign(G, { rails, v9: v11, torps, v8, solo });
   for (const k in G) { prep(G[k]); scene.add(G[k]); }
-  // torpedo pivots on their own axes for the fire animation
+  // rotating groups (gear train): pivots on their axes; the firing animation turns them
+  const A = KIN.axes;
+  ROT.shaft = new THREE.Group(); ROT.shaft.position.set(A.shaft[0], A.shaft[1], 0);
+  ROT.servo = new THREE.Group(); ROT.servo.position.set(A.servo[0], A.servo[1], 0);
+  ROT.marker = new THREE.Group(); ROT.marker.position.set(A.marker[0], 0, A.marker[1]);
+  for (const k in ROT) v11.add(ROT[k]);
+  const all = []; v11.traverse(o => { if (o.isMesh && META[o.name]) all.push(o); }); torps.traverse(o => { if (o.isMesh && META[o.name]) all.push(o); });
+  for (const o of all) { const r = META[o.name].rot; if (r) ROT[r].attach(o); }
   for (const side of ['L', 'R']) {
-    const m = torps.getObjectByName('tp__Torpedo_D18_' + side) || torps.getObjectByName('tp__Torpedo_C_' + side);
-    if (!m) continue;
-    const bb = new THREE.Box3().setFromObject(m), c = bb.getCenter(new THREE.Vector3());
-    const pivot = new THREE.Group(); pivot.position.set(c.x, c.y, 0); torps.add(pivot); pivot.attach(m);
-    torp[side] = { pivot, mesh: m, t: null, x: c.x };
+    const m = torps.getObjectByName('tp__Torpedo_D18_' + side); if (!m) continue;
+    const k = KIN.torpedo[side];
+    const pivot = new THREE.Group(); pivot.position.set(k.axis[0], k.axis[1], 0); torps.add(pivot); pivot.attach(m);
+    torp[side] = { pivot, mesh: m, out: null, ...k, x: k.axis[0] };
   }
   for (const side of ['left', 'right']) {
-    const m = v9.getObjectByName('v9__Marker_P83_' + side);
-    if (!m) continue;
-    const pivot = new THREE.Group(); pivot.position.set(side === 'left' ? 582.9145 : 617.9145, 0, 1158.9689);
-    v9.add(pivot); pivot.attach(m); markers[side] = {pivot, t: null, lock: side === 'left' ? -41.54 : -40.685};
+    const m = v11.getObjectByName('v11__Marker_P83_' + side); if (!m) continue;
+    const k = KIN.marker[side];
+    const pivot = new THREE.Group(); pivot.position.set(k.axis[0], 0, k.axis[1]); v11.add(pivot); pivot.attach(m);
+    markers[side] = { pivot, out: null, ...k };
   }
+  for (const o of all) { o.userData.home = o.position.clone(); o.userData.step = META[o.name].step; o.userData.ap = new THREE.Vector3(...META[o.name].approach); ASM.push(o); }
   // labels on the standalone torpedoes
   const L = { B: 'B, tested · 129.5 mm', D18: 'Slim Ø18, new · 150 mm', C: 'C, fat-body alternate' };
   for (const k in L) {
@@ -251,27 +265,87 @@ for (const k of ['B', 'D18', 'C']) $('s' + k).onchange = syncSolo;
 document.querySelectorAll('[data-v]').forEach(b => b.onclick = () => setView(b.dataset.v));
 $('minb').onclick = () => { const u = $('ui'); u.classList.toggle('min'); $('minb').textContent = u.classList.contains('min') ? '+' : '–'; };
 
-// fire: bayonet unlock roll, then the spring pushes it out along +Z
-function fire(s) { if (torp[s]) torp[s].t = performance.now(); }
-$('fireL').onclick = () => fire('L'); $('fireR').onclick = () => fire('R');
-$('dropL').onclick = () => { if (markers.left) markers.left.t = performance.now(); };
-$('dropR').onclick = () => { if (markers.right) markers.right.t = performance.now(); };
-$('reset').onclick = () => { for (const m of Object.values(markers)) { m.t = null; m.pivot.rotation.set(0,0,0); m.pivot.position.y = 0; } for (const s in torp) { torp[s].t = null; torp[s].pivot.rotation.set(0, 0, 0); torp[s].pivot.position.z = 0; } };
-function stepTorp(now) {
+// ---------- firing: the servo angle drives everything ----------
+// shaft = -1.5 x servo (27T -> 18T), marker shaft = shaft (20:20 helix pair), servo gear = servo.
+// A payload rolls off its lock over the last 35 deg of servo travel before its release angle, then launches.
+let servo = 0, servoTarget = 0, hold = 0, homeAfter = false;
+const WIN = 35, SPEED = 70;                       // deg of servo per second
+function goServo(t) { if (asmOn) asmStop(); servoTarget = t; homeAfter = true; }
+$('fireL').onclick = () => goServo(KIN.torpedo.L.release);
+$('fireR').onclick = () => goServo(KIN.torpedo.R.release);
+$('dropR').onclick = () => goServo(KIN.marker.right.release);
+$('dropL').onclick = () => goServo(KIN.marker.left.release);
+function reload() {
+  servo = servoTarget = 0; homeAfter = false;
+  for (const T of Object.values(torp)) { T.out = null; T.pivot.rotation.set(0, 0, 0); T.pivot.position.z = 0; }
+  for (const M of Object.values(markers)) { M.out = null; M.pivot.rotation.set(0, 0, 0); M.pivot.position.y = 0; }
+}
+$('reset').onclick = reload;
+const ramp = (a, r) => r > 0 ? THREE.MathUtils.clamp((a - (r - WIN)) / WIN, 0, 1) : THREE.MathUtils.clamp(((r + WIN) - a) / WIN, 0, 1);
+let last = performance.now();
+function stepFire(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (hold > 0) hold -= dt;
+  else if (servo !== servoTarget) {
+    const d = servoTarget - servo, s = Math.sign(d) * Math.min(Math.abs(d), SPEED * dt); servo += s;
+    if (servo === servoTarget && homeAfter) { hold = 1.0; servoTarget = 0; homeAfter = false; }
+  }
+  const D = THREE.MathUtils.degToRad;
+  const shaft = KIN.ratio_servo_to_shaft * servo;
+  ROT.servo.rotation.z = D(servo); ROT.shaft.rotation.z = D(shaft); ROT.marker.rotation.y = D(shaft);
+  for (const T of Object.values(torp)) {
+    if (T.out == null) {
+      T.pivot.rotation.z = D(T.unlock) * ramp(servo, T.release);
+      if (servo >= T.release - 0.01) T.out = now;
+    } else {
+      const t = (now - T.out) / 1000; T.pivot.rotation.z = D(T.unlock); T.pivot.position.z = 600 * t + 900 * t * t;
+      if (T.pivot.position.z > 2500) T.pivot.visible = false;
+    }
+  }
   for (const M of Object.values(markers)) {
-    if (M.t == null) continue;
-    const t = (now-M.t)/1000;
-    M.pivot.rotation.y = THREE.MathUtils.degToRad(M.lock) * Math.min(1,t/0.6);
-    const dt = Math.max(0,t-0.7); M.pivot.position.y = -600*dt;
-    if (dt > 4) M.t = null;
+    if (M.out == null) {
+      M.pivot.rotation.y = D(M.lock) * ramp(servo, M.release);
+      if (servo <= M.release + 0.01) M.out = now;
+    } else {
+      const t = (now - M.out) / 1000; M.pivot.rotation.y = D(M.lock); M.pivot.position.y = -400 * t - 300 * t * t;
+      if (M.pivot.position.y < -1500) M.pivot.visible = false;
+    }
   }
-  for (const s in torp) {
-    const T = torp[s]; if (T.t == null) continue;
-    const t = (now - T.t) / 1000;
-    T.pivot.rotation.z = THREE.MathUtils.degToRad(47) * Math.min(1, t / 0.6);
-    const tt = Math.max(0, t - 0.7); T.pivot.position.z = 600 * tt + 900 * tt * tt;
-    if (T.pivot.position.z > 2500) T.t = null;
+  $('servoTxt').textContent = `Servo ${servo.toFixed(1)}° · torpedo shaft ${shaft.toFixed(1)}° · marker shaft ${shaft.toFixed(1)}°`;
+}
+// reload also brings launched payloads back into view
+const _reload = reload; $('reset').onclick = () => { _reload(); for (const T of Object.values(torp)) T.pivot.visible = true; for (const M of Object.values(markers)) M.pivot.visible = true; };
+
+// ---------- assembly procedure ----------
+let asmOn = false, asmK = 0, asmT0 = 0, asmPlay = false;
+const ADUR = 1.1, APAUSE = 0.7;
+function asmShow(k) {
+  asmOn = true; asmK = THREE.MathUtils.clamp(k, 0, KIN.steps.length - 1); asmT0 = performance.now();
+  $('asmTxt').textContent = `Step ${asmK + 1}/${KIN.steps.length}: ${KIN.steps[asmK]}`;
+}
+function asmStop() {
+  asmOn = false; asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on');
+  for (const o of ASM) { o.visible = true; o.position.copy(o.userData.home); }
+  $('asmTxt').textContent = 'Step through how the launcher goes together.';
+}
+$('aPlay').onclick = () => {
+  if (asmPlay) { asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); return; }
+  $('reset').onclick(); asmPlay = true; $('aPlay').textContent = '❚❚ Pause'; $('aPlay').classList.add('on');
+  if (!asmOn || asmK >= KIN.steps.length - 1) { setView('head'); asmShow(0); } else asmShow(asmK + 1);
+};
+$('aNext').onclick = () => { $('reset').onclick(); asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); asmShow(asmOn ? asmK + 1 : 0); };
+$('aPrev').onclick = () => { $('reset').onclick(); asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); asmShow(asmOn ? asmK - 1 : 0); };
+$('aDone').onclick = asmStop;
+function stepAsm(now) {
+  if (!asmOn) return;
+  const t = (now - asmT0) / 1000, k = Math.min(1, t / ADUR), e = 1 - Math.pow(1 - k, 3);
+  for (const o of ASM) {
+    const s = o.userData.step;
+    o.visible = s <= asmK;
+    if (s < asmK) o.position.copy(o.userData.home);
+    else if (s === asmK) o.position.copy(o.userData.home).addScaledVector(o.userData.ap, 1 - e);
   }
+  if (asmPlay && t > ADUR + APAUSE) { if (asmK < KIN.steps.length - 1) asmShow(asmK + 1); else { asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); } }
 }
 
 // picking
@@ -283,7 +357,7 @@ canvas.addEventListener('pointerup', e => {
   ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), camera);
   const hit = ray.intersectObjects(pickables.filter(shown), false).find(h => !(clipOn && clipPlane.distanceToPoint(h.point) < 0));
   if (!hit) { pickEl.style.display = 'none'; return; }
-  const n = (hit.object.name || '').replace(/^(robot|v9|v8|tp|solo)__/, (m, g) => ({ robot: 'Talos · ', v9: 'V10 · ', v8: 'V8 · ', tp: '', solo: '' }[g])).replace(/_+/g, ' ');
+  const md = META[hit.object.name]; const n = md && md.label ? 'V11 · ' + md.label : (hit.object.name || '').replace(/^(robot|v11|v9|v8|tp|solo)__/, (m, g) => ({ robot: 'Talos · ', v11: 'V11 · ', v9: 'V10 · ', v8: 'V8 · ', tp: '', solo: '' }[g])).replace(/_+/g, ' ');
   pickEl.textContent = n; pickEl.style.display = 'block';
 });
 
@@ -292,7 +366,7 @@ addEventListener('resize', resize); resize();
 renderer.setAnimationLoop(now => {
   if (anim) { const k = Math.min(1, (now - anim.s) / 700), e = k * k * (3 - 2 * k);
     camera.position.lerpVectors(anim.p0, anim.p, e); controls.target.lerpVectors(anim.t0, anim.t, e); if (k >= 1) anim = null; }
-  stepTorp(now); controls.update(); updateCaps();
+  if (KIN) { stepFire(now); stepAsm(now); } controls.update(); updateCaps();
   renderer.render(scene, camera); labels.render(scene, camera);
 });
 </script>

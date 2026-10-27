@@ -1,0 +1,72 @@
+{
+ "O": [
+  600.414,
+  892.833,
+  1199.5514
+ ],
+ "steps": [
+  "Torpedo body: the frame everything mounts to.",
+  "Captive nuts into the body traps (top cover, marker base, servo-holder ears).",
+  "Right helix into its cavity, then the printed torpedo shaft (18T gear on it) up through both bearings.",
+  "Pushing arm onto the shaft top, 4-40 cross pin + nut.",
+  "Torpedo springs onto their guide pins.",
+  "Top cover onto the body, 4 flat-head 4-40s into the captive nuts.",
+  "Marker shaft + left helix into the marker base, base up to the body, 3 SHCS 4-40.",
+  "Marker springs, bottom cover, screws C and D.",
+  "Servo holder to the body's rear face, 2 SHCS 8-32 into captive nuts.",
+  "SER-20XX servo onto its seat (4 M3 through-bolts), servo gear onto the spline.",
+  "Crossbar arm onto the keel: 2 bolts + nuts, crossbar captive nuts in their side slots.",
+  "Load: torpedoes through the top cover, markers up into the bottom cover."
+ ],
+ "axes": {
+  "shaft": [
+   600.414,
+   892.833
+  ],
+  "servo": [
+   600.414,
+   870.333
+  ],
+  "marker": [
+   600.414,
+   1176.5514
+  ]
+ },
+ "ratio_servo_to_shaft": -1.5,
+ "torpedo": {
+  "L": {
+   "axis": [
+    582.0292236891497,
+    911.2177763108502
+   ],
+   "release": 51.5,
+   "unlock": 47
+  },
+  "R": {
+   "axis": [
+    618.7987763108503,
+    911.2177763108502
+   ],
+   "release": 111.5,
+   "unlock": 47
+  }
+ },
+ "marker": {
+  "right": {
+   "axis": [
+    617.914,
+    1159.0514
+   ],
+   "release": -49.75,
+   "lock": -40.685
+  },
+  "left": {
+   "axis": [
+    582.914,
+    1159.0514
+   ],
+   "release": -109.75,
+   "lock": -41.54
+  }
+ }
+}
