@@ -200,7 +200,7 @@
   "qty": 2,
   "note": "loaded 22.41 mm",
   "steps": [
-   10
+   9
   ],
   "label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)",
   "link": "https://www.mcmaster.com/9435K123/"
@@ -304,16 +304,16 @@
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
  },
  {
-  "name": "Socket head screw 5/16-18 x 2-1/2\", 18-8",
+  "name": "Set screw 4-40 x 1/2\", cup point, 18-8",
   "kind": "McMaster",
-  "spec": "5/16-18 x 2-1/2\" SHCS",
+  "spec": "4-40 x 1/2\" set screw",
   "qty": 2,
-  "note": "torpedo spring guide, threads into the body from behind",
+  "note": "torpedo spring retention: side of the body, tip on the end coil",
   "steps": [
-   9
+   10
   ],
-  "label": "SHCS 5-16-18 x 2-1-2",
-  "link": "https://www.mcmaster.com/products/socket-head-screws/"
+  "label": "Set Screw 4-40 x 1-2",
+  "link": "https://www.mcmaster.com/products/set-screws/"
  },
  {
   "name": "Socket head screw 8-32 x 2-1/2\", 18-8",

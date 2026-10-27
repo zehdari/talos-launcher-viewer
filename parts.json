@@ -750,7 +750,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 10,
+"step": 9,
 "approach": [
 0.0,
 0.0,
@@ -776,7 +776,7 @@
 0.82
 ],
 "faces": 39998,
-"step": 10,
+"step": 9,
 "approach": [
 0.0,
 0.0,
@@ -824,7 +824,7 @@
 0.55,
 0.22
 ],
-"faces": 17990,
+"faces": 20622,
 "step": 0,
 "approach": [
 0.0,
@@ -1069,52 +1069,6 @@
 "step_old": 3,
 "sub": null
 },
-"v11__SHCS_5_16_18_x_2_1_2_1": {
-"group": "v11",
-"closed": true,
-"color": [
-0.62,
-0.64,
-0.68
-],
-"faces": 614,
-"step": 9,
-"approach": [
-0.0,
-0.0,
--90.0
-],
-"rot": null,
-"label": "SHCS 5-16-18 x 2-1-2",
-"inst": 1,
-"cat": "Fasteners",
-"spring": null,
-"step_old": 4,
-"sub": null
-},
-"v11__SHCS_5_16_18_x_2_1_2_2": {
-"group": "v11",
-"closed": true,
-"color": [
-0.62,
-0.64,
-0.68
-],
-"faces": 614,
-"step": 9,
-"approach": [
-0.0,
-0.0,
--90.0
-],
-"rot": null,
-"label": "SHCS 5-16-18 x 2-1-2",
-"inst": 2,
-"cat": "Fasteners",
-"spring": null,
-"step_old": 4,
-"sub": null
-},
 "v11__SHCS_8_32_x_2_1_2_1": {
 "group": "v11",
 "closed": true,
@@ -1229,5 +1183,51 @@
 "spring": null,
 "step_old": 9,
 "sub": "LV11 Servo Holder"
+},
+"v11__Set_Screw_4_40_x_1_2_1": {
+"group": "v11",
+"closed": true,
+"color": [
+0.62,
+0.64,
+0.68
+],
+"faces": 374,
+"step": 10,
+"approach": [
+-40.0,
+0.0,
+0.0
+],
+"rot": null,
+"label": "Set Screw 4-40 x 1-2",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null,
+"step_old": 4,
+"sub": null
+},
+"v11__Set_Screw_4_40_x_1_2_2": {
+"group": "v11",
+"closed": true,
+"color": [
+0.62,
+0.64,
+0.68
+],
+"faces": 374,
+"step": 10,
+"approach": [
+40.0,
+0.0,
+0.0
+],
+"rot": null,
+"label": "Set Screw 4-40 x 1-2",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null,
+"step_old": 4,
+"sub": null
 }
 }
