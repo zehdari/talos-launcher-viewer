@@ -110,7 +110,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=16';
+const V = '?v=18';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -406,14 +406,40 @@ const _reload = reload; $('reset').onclick = () => { _reload(); for (const T of 
 
 // ---------- assembly procedure ----------
 let asmOn = false, asmK = 0, asmT0 = 0, asmPlay = false;
-const ADUR = 1.1, APAUSE = 0.7;
+const ADUR = 1.0, APAUSE = 0.9;
+// earlier parts go see-through, the parts going in now glow
+const GHOST = 0.16, GLOW = new THREE.Color(0xff7a00);
+function asmStyle() {
+  for (const o of ASM) {
+    const m = o.material, st = o.userData.step;
+    if (!o.userData.mat0) o.userData.mat0 = { e: m.emissive.clone(), ei: m.emissiveIntensity, t: m.transparent, op: m.opacity, dw: m.depthWrite };
+    const z = o.userData.mat0;
+    if (asmOn && st < asmK) { m.transparent = true; m.opacity = GHOST; m.depthWrite = false; m.emissive.copy(z.e); m.emissiveIntensity = z.ei; }
+    else if (asmOn && st === asmK) { m.transparent = z.t; m.opacity = z.op; m.depthWrite = z.dw; m.emissive.copy(GLOW); m.emissiveIntensity = 0.9; }
+    else { m.transparent = z.t; m.opacity = z.op; m.depthWrite = z.dw; m.emissive.copy(z.e); m.emissiveIntensity = z.ei; }
+    m.needsUpdate = true;
+  }
+  G.rails.traverse(o => { if (!o.isMesh) return; const m = o.material;                     // robot rails fade back too
+    m.transparent = asmOn; m.opacity = asmOn ? 0.15 : 1; m.depthWrite = !asmOn; m.needsUpdate = true; });
+}
+function asmFrame() {      // aim the camera at this step's new parts (at their final place)
+  const box = new THREE.Box3();
+  for (const o of ASM) if (o.userData.step === asmK) {
+    const p0 = o.position.clone(); o.position.copy(o.userData.home); o.updateMatrixWorld(true); box.expandByObject(o); o.position.copy(p0); o.updateMatrixWorld(true);
+  }
+  if (box.isEmpty()) return;
+  const c = box.getCenter(new THREE.Vector3()), r = Math.max(box.getSize(new THREE.Vector3()).length() / 2, 18);
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  const t = FIT.C.clone().lerp(c, 0.65), d = THREE.MathUtils.clamp(r * 6, 330, 650);
+  anim = { p0: camera.position.clone(), t0: controls.target.clone(), p: t.clone().addScaledVector(dir, d), t, s: performance.now() };
+}
 function asmShow(k) {
-  asmOn = true; asmK = THREE.MathUtils.clamp(k, 0, KIN.steps.length - 1); asmT0 = performance.now();
+  asmOn = true; asmK = THREE.MathUtils.clamp(k, 0, KIN.steps.length - 1); asmT0 = performance.now(); asmStyle(); asmFrame();
   $('asmTxt').textContent = `Step ${asmK + 1}/${KIN.steps.length}: ${KIN.steps[asmK]}`;
   $('asmParts').innerHTML = stepParts(asmK);
 }
 function asmStop() {
-  asmOn = false; asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on');
+  asmOn = false; asmPlay = false; asmStyle(); $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on');
   for (const o of ASM) { o.visible = !o.userData.hidden; o.position.copy(o.userData.home); }
   $('asmTxt').textContent = 'Step through how the launcher goes together.'; $('asmParts').innerHTML = '';
 }
@@ -432,7 +458,7 @@ function stepAsm(now) {
     const s = o.userData.step;
     o.visible = s <= asmK && !o.userData.hidden;
     if (s < asmK) o.position.copy(o.userData.home);
-    else if (s === asmK) o.position.copy(o.userData.home).addScaledVector(o.userData.ap, 1 - e);
+    else if (s === asmK) { o.position.copy(o.userData.home).addScaledVector(o.userData.ap, 1 - e); o.material.emissiveIntensity = 0.7 + 0.45 * Math.sin(t * 5); }
   }
   if (asmPlay && t > ADUR + APAUSE) { if (asmK < KIN.steps.length - 1) asmShow(asmK + 1); else { asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); } }
 }
