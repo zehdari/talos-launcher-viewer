@@ -100,7 +100,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=12';
+const V = '?v=13';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -132,8 +132,16 @@ const VIEWS = {
   tnose: [P(90, 60, 330), P(0, 0, 110)],
 };
 let anim = null;
+let FIT = null;
+function fitView(v) {           // camera distance so the launcher fits the screen area the panel leaves free
+  const r = $('ui').getBoundingClientRect(), w = innerWidth, h = innerHeight, wide = w > 600;
+  const wf = wide ? w - r.right : w, hf = wide ? h : h - r.bottom, t20 = Math.tan(THREE.MathUtils.degToRad(20));
+  const half = Math.min(Math.atan(t20 * wf / h), Math.atan(t20 * hf / h));
+  const d = Math.max(v.k * FIT.R, 0.92 * FIT.R / Math.sin(half)) * (v.k > 3 ? 1.6 : 1);
+  return [FIT.C.clone().addScaledVector(v.dir, d), FIT.C.clone()];
+}
 function setView(k, instant) {
-  const [p, t] = VIEWS[k];
+  const [p, t] = VIEWS[k].dir ? fitView(VIEWS[k]) : VIEWS[k];
   if (instant) { camera.position.copy(p); controls.target.copy(t); anim = null; return; }
   anim = { p0: camera.position.clone(), t0: controls.target.clone(), p, t, s: performance.now() };
 }
@@ -224,6 +232,13 @@ fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
     const bb = new THREE.Box3().setFromObject(m); const d = document.createElement('div'); d.className = 'lbl'; d.textContent = L[k];
     const o = new CSS2DObject(d); const cc = bb.getCenter(new THREE.Vector3()); o.position.set(0, bb.max.y + 8, cc.z); solo.add(o); o.userData.k = k;
   }
+  // views aimed at the V11 launcher itself (bounding box of launcher + torpedoes)
+  const bb = new THREE.Box3().setFromObject(v11).union(new THREE.Box3().setFromObject(torps));
+  const C = bb.getCenter(new THREE.Vector3()), R = bb.getSize(new THREE.Vector3()).length() / 2;
+  FIT = { C, R };
+  const at = (dx, dy, dz, k) => ({ dir: new THREE.Vector3(dx, dy, dz).normalize(), k });
+  VIEWS.head = at(0.62, 0.5, 0.6, 2.2); VIEWS.side = at(1, 0.05, 0, 2.2); VIEWS.front = at(0, 0.2, 1, 2.2);
+  VIEWS.under = at(0.45, -0.75, 0.5, 2.2); VIEWS.robot = at(0.7, 0.75, 0.9, 4.5);
   syncSolo(); $('load').style.display = 'none';
   setMode('robot');
 }).catch(e => { $('load').textContent = 'Load failed: ' + e; });
@@ -263,7 +278,7 @@ $('tTorps').onchange = e => G.torps && (G.torps.visible = e.target.checked);
 $('tV8').onchange = e => G.v8 && (G.v8.visible = e.target.checked);
 for (const k of ['B', 'D18', 'C']) $('s' + k).onchange = syncSolo;
 document.querySelectorAll('[data-v]').forEach(b => b.onclick = () => setView(b.dataset.v));
-$('minb').onclick = () => { const u = $('ui'); u.classList.toggle('min'); $('minb').textContent = u.classList.contains('min') ? '+' : '–'; };
+$('minb').onclick = () => { const u = $('ui'); u.classList.toggle('min'); $('minb').textContent = u.classList.contains('min') ? '+' : '–'; resize(); };
 
 // ---------- firing: the servo angle drives everything ----------
 // shaft = -1.5 x servo (27T -> 18T), marker shaft = shaft (20:20 helix pair), servo gear = servo.
@@ -361,7 +376,13 @@ canvas.addEventListener('pointerup', e => {
   pickEl.textContent = n; pickEl.style.display = 'block';
 });
 
-function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labels.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+function resize() {
+  const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labels.setSize(w, h); camera.aspect = w / h;
+  const r = $('ui').getBoundingClientRect();
+  if (w > 600) camera.setViewOffset(w, h, -Math.round(r.right / 2), 0, w, h);          // panel on the left: shift right
+  else camera.setViewOffset(w, h, 0, -Math.round(r.bottom / 2), w, h);                 // panel on top: shift down
+  camera.updateProjectionMatrix();
+}
 addEventListener('resize', resize); resize();
 renderer.setAnimationLoop(now => {
   if (anim) { const k = Math.min(1, (now - anim.s) / 700), e = k * k * (3 - 2 * k);
