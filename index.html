@@ -23,6 +23,9 @@
   #pick { position:fixed; right:10px; bottom:10px; max-width:60%; background:var(--panel); border:1px solid #2a313b; border-radius:10px; padding:8px 10px; font-size:13px; display:none; z-index:2; }
   #load { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; color:var(--mut); font-size:15px; pointer-events:none; }
   table { border-collapse:collapse; width:100%; font-size:12px; } td { padding:2px 0; vertical-align:top; } td:last-child { text-align:right; } td:first-child { color:var(--mut); padding-right:8px; }
+  #bomTab td { padding:3px 4px 3px 0; text-align:left; } #bomTab td:first-child { color:var(--fg); white-space:nowrap; }
+  #bomTab a { color:#ffb070; } .kind { font-size:10px; padding:1px 5px; border-radius:6px; background:#2b3440; color:var(--mut); white-space:nowrap; }
+  #asmParts b { color:var(--fg); font-weight:600; }
   .lbl { color:#fff; font-size:12px; background:rgba(0,0,0,.55); padding:2px 6px; border-radius:6px; white-space:nowrap; pointer-events:none; }
   body.mode-torp .robot-only { display:none; } body.mode-robot .torp-only { display:none; }
   @media (max-width:600px) { #ui { width:calc(100% - 44px); max-height:48%; } }
@@ -69,11 +72,17 @@
     <div class="robot-only">
       <div class="sec">Fire (servo drives the gear train)</div>
       <div class="btns"><button id="fireL">Fire left</button><button id="fireR">Fire right</button><button id="dropR">Drop right marker</button><button id="dropL">Drop left marker</button><button id="reset">Reload</button></div>
+      <div class="sub" style="margin-top:8px">Servo by hand (drag; release angles fire the payloads)</div>
+      <input type="range" id="servoSl" min="-120" max="120" step="0.5" value="0">
+      <div class="btns" style="margin-top:4px"><button id="servoHome">Home servo</button></div>
       <div class="sub" id="servoTxt" style="margin-top:6px">Servo 0.0° · torpedo shaft 0.0° · marker shaft 0.0°</div>
       <div class="sub">Slow motion ×1/25: the spring stroke is over in ~5 ms, then water drag slows the payload. Servo 27T → shaft 18T (1.5:1), helix pair 20:20 to the marker shaft. One direction fires left then right torpedo, the other right then left marker, so firing the second one passes the first.</div>
       <div class="sec">Assembly procedure</div>
       <div class="btns"><button id="aPrev">◀</button><button id="aPlay">▶ Play</button><button id="aNext">▶|</button><button id="aDone">Done</button></div>
       <div class="sub" id="asmTxt" style="margin-top:6px">Step through how the launcher goes together.</div>
+      <div class="sub" id="asmParts" style="margin-top:4px"></div>
+      <div class="sec">Bill of materials</div>
+      <details id="bomBox"><summary style="cursor:pointer" id="bomSum">Parts list</summary><table id="bomTab" style="margin-top:6px"></table></details>
     </div>
 
     <div class="sec">Key numbers</div>
@@ -101,7 +110,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=15';
+const V = '?v=16';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -199,11 +208,11 @@ function prep(root) {
     if (m && m.closed) addCaps(o, new THREE.Color().setRGB(...m.color, THREE.SRGBColorSpace));
   }
 }
-const torp = {}, markers = {}, ROT = {}, ASM = []; let KIN = null;
+const torp = {}, markers = {}, ROT = {}, ASM = []; let KIN = null, BOM = [];
 fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
-  return Promise.all([fetch('kin.json' + V).then(r => r.json()), ...['rails', 'v11', 'torps', 'v8', 'solo'].map(load)]); })
-.then(([kin, rails, v11, torps, v8, solo]) => {
-  KIN = kin; Object.assign(G, { rails, v9: v11, torps, v8, solo });
+  return Promise.all([fetch('kin.json' + V).then(r => r.json()), ...['rails', 'v11', 'torps', 'v8', 'solo'].map(load), fetch('bom.json' + V).then(r => r.json())]); })
+.then(([kin, rails, v11, torps, v8, solo, bom]) => {
+  KIN = kin; BOM = bom; buildBom(); Object.assign(G, { rails, v9: v11, torps, v8, solo });
   for (const k in G) { prep(G[k]); scene.add(G[k]); }
   // rotating groups (gear train): pivots on their axes; the firing animation turns them
   const A = KIN.axes;
@@ -251,6 +260,27 @@ fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
   syncSolo(); $('load').style.display = 'none';
   setMode('robot');
 }).catch(e => { $('load').textContent = 'Load failed: ' + e; });
+
+// ---------- bill of materials ----------
+function buildBom() {
+  const t = $('bomTab'); const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const order = { printed: 0, purchased: 1, McMaster: 2 };
+  const rows = [...BOM].sort((a, b) => order[a.kind] - order[b.kind]);
+  let printed = 0, hw = 0;
+  t.innerHTML = '<tr><td>Qty</td><td>Part</td><td></td></tr>' + rows.map(r => {
+    if (r.kind === 'printed') printed += r.qty; else hw += r.qty;
+    const links = r.step_file ? ` <a href="${encodeURI(r.step_file)}" download>STEP</a> · <a href="${encodeURI(r.stl_file)}" download>STL</a>`
+                              : (r.link ? ` <a href="${r.link}" target="_blank" rel="noopener">${r.kind === 'McMaster' ? 'McMaster' : 'link'}</a>` : '');
+    return `<tr><td>${r.qty}×</td><td>${esc(r.name)}${links}<div class="sub" style="margin:1px 0 0">${esc(r.spec)} · ${esc(r.note)}</div></td><td><span class="kind">${r.kind === 'printed' ? '3D print' : r.kind}</span></td></tr>`;
+  }).join('');
+  $('bomSum').textContent = `Parts list: ${printed} printed parts, ${hw} hardware items`;
+}
+function stepParts(k) {
+  const items = BOM.filter(r => r.steps.includes(k)).map(r => {
+    const n = r.label ? ASM.filter(o => o.userData.step === k && META[o.name].label === r.label).length : r.qty;
+    return n ? `<b>${n}×</b> ${r.name}${r.label ? '' : ' <i>(not modelled)</i>'}` : null; }).filter(Boolean);
+  return items.length ? 'Adds: ' + items.join(' · ') : '';
+}
 
 // ---------- per-part show / hide ----------
 function buildPartsList(all) {
@@ -317,13 +347,16 @@ $('minb').onclick = () => { const u = $('ui'); u.classList.toggle('min'); $('min
 // A payload rolls off its lock over the last 35 deg of servo travel before its release angle, then launches.
 let servo = 0, servoTarget = 0, hold = 0, homeAfter = false;
 const WIN = 35, SPEED = 70;                       // deg of servo per second
-function goServo(t) { if (asmOn) asmStop(); servoTarget = t; homeAfter = true; }
+function goServo(t) { if (asmOn) asmStop(); servoTarget = t; homeAfter = true; manual = false; }
+let manual = false;
+$('servoSl').oninput = e => { if (asmOn) asmStop(); manual = true; homeAfter = false; hold = 0; servo = servoTarget = +e.target.value; };
+$('servoHome').onclick = () => { manual = false; homeAfter = false; hold = 0; servoTarget = 0; };
 $('fireL').onclick = () => goServo(KIN.torpedo.L.release);
 $('fireR').onclick = () => goServo(KIN.torpedo.R.release);
 $('dropR').onclick = () => goServo(KIN.marker.right.release);
 $('dropL').onclick = () => goServo(KIN.marker.left.release);
 function reload() {
-  servo = servoTarget = 0; homeAfter = false;
+  servo = servoTarget = 0; homeAfter = false; manual = false; $('servoSl').value = 0;
   for (const T of Object.values(torp)) { T.out = null; T.pivot.rotation.set(0, 0, 0); T.pivot.position.z = 0; }
   for (const M of Object.values(markers)) { M.out = null; M.pivot.rotation.set(0, 0, 0); M.pivot.position.y = 0; }
 }
@@ -365,6 +398,7 @@ function stepFire(now) {
       if (d > 1500) M.pivot.visible = false;
     }
   }
+  if (!manual) $('servoSl').value = servo;
   $('servoTxt').textContent = `Servo ${servo.toFixed(1)}° · torpedo shaft ${shaft.toFixed(1)}° · marker shaft ${shaft.toFixed(1)}°`;
 }
 // reload also brings launched payloads back into view
@@ -376,11 +410,12 @@ const ADUR = 1.1, APAUSE = 0.7;
 function asmShow(k) {
   asmOn = true; asmK = THREE.MathUtils.clamp(k, 0, KIN.steps.length - 1); asmT0 = performance.now();
   $('asmTxt').textContent = `Step ${asmK + 1}/${KIN.steps.length}: ${KIN.steps[asmK]}`;
+  $('asmParts').innerHTML = stepParts(asmK);
 }
 function asmStop() {
   asmOn = false; asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on');
   for (const o of ASM) { o.visible = !o.userData.hidden; o.position.copy(o.userData.home); }
-  $('asmTxt').textContent = 'Step through how the launcher goes together.';
+  $('asmTxt').textContent = 'Step through how the launcher goes together.'; $('asmParts').innerHTML = '';
 }
 $('aPlay').onclick = () => {
   if (asmPlay) { asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on'); return; }

@@ -1,0 +1,379 @@
+[
+ {
+  "name": "Torpedo Body",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "holder face on the bed",
+  "steps": [
+   0
+  ],
+  "label": "LV11 Torpedo Body",
+  "step_file": "print/LV11 Torpedo Body PRINT.step",
+  "stl_file": "print/LV11 Torpedo Body PRINT.STL"
+ },
+ {
+  "name": "Marker Base",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "joint face on the bed",
+  "steps": [
+   6
+  ],
+  "label": "LV11 Marker Base",
+  "step_file": "print/LV11 Marker Base PRINT.step",
+  "stl_file": "print/LV11 Marker Base PRINT.STL"
+ },
+ {
+  "name": "Top Cover (open frame)",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "exit face on the bed; arrows = AMS colour",
+  "steps": [
+   5
+  ],
+  "label": "LV11 Top Cover",
+  "step_file": "print/LV11 Top Cover PRINT.step",
+  "stl_file": "print/LV11 Top Cover PRINT.STL"
+ },
+ {
+  "name": "Bottom Cover",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "exit face on the bed; arrows = AMS colour",
+  "steps": [
+   7
+  ],
+  "label": "LV11 Bottom Cover",
+  "step_file": "print/LV11 Bottom Cover PRINT.step",
+  "stl_file": "print/LV11 Bottom Cover PRINT.STL"
+ },
+ {
+  "name": "Crossbar Arm",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "crossbar seat on the bed",
+  "steps": [
+   10
+  ],
+  "label": "LV11 Crossbar Arm",
+  "step_file": "print/LV11 Crossbar Arm PRINT.step",
+  "stl_file": "print/LV11 Crossbar Arm PRINT.STL"
+ },
+ {
+  "name": "Servo Holder",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "on its side",
+  "steps": [
+   8
+  ],
+  "label": "LV11 Servo Holder",
+  "step_file": "print/LV11 Servo Holder PRINT.step",
+  "stl_file": "print/LV11 Servo Holder PRINT.STL"
+ },
+ {
+  "name": "Pushing Arm",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "thrust face on the bed",
+  "steps": [
+   3
+  ],
+  "label": "LV11 Pushing Arm",
+  "step_file": "print/LV11 Pushing Arm PRINT.step",
+  "stl_file": "print/LV11 Pushing Arm PRINT.STL"
+ },
+ {
+  "name": "Torpedo Shaft with 18T gear",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "gear face on the bed",
+  "steps": [
+   2
+  ],
+  "label": "LV11 Torpedo Shaft",
+  "step_file": "print/LV11 Torpedo Shaft PRINT.step",
+  "stl_file": "print/LV11 Torpedo Shaft PRINT.STL"
+ },
+ {
+  "name": "Marker Shaft",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 1,
+  "note": "lobe end on the bed",
+  "steps": [
+   6
+  ],
+  "label": "LV11 Marker Shaft",
+  "step_file": "print/LV11 Marker Shaft PRINT.step",
+  "stl_file": "print/LV11 Marker Shaft PRINT.STL"
+ },
+ {
+  "name": "Servo Gear 27T (team)",
+  "kind": "printed",
+  "spec": "PETG",
+  "qty": 1,
+  "note": "team part, unchanged",
+  "steps": [
+   9
+  ],
+  "label": "Servogear",
+  "step_file": "print/Servogear PRINT.step",
+  "stl_file": "print/Servogear PRINT.STL"
+ },
+ {
+  "name": "Right Helix (team)",
+  "kind": "printed",
+  "spec": "PETG",
+  "qty": 1,
+  "note": "team part, unchanged",
+  "steps": [
+   2
+  ],
+  "label": "Right Helix Modified",
+  "step_file": "print/Right Helix Modified PRINT.step",
+  "stl_file": "print/Right Helix Modified PRINT.STL"
+ },
+ {
+  "name": "Left Helix (team)",
+  "kind": "printed",
+  "spec": "PETG",
+  "qty": 1,
+  "note": "team part, unchanged",
+  "steps": [
+   6
+  ],
+  "label": "Left Helix Modified",
+  "step_file": "print/Left Helix Modified PRINT.step",
+  "stl_file": "print/Left Helix Modified PRINT.STL"
+ },
+ {
+  "name": "Torpedo D18",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 2,
+  "note": "tail on the bed",
+  "steps": [
+   11
+  ],
+  "label": "LV11 Torpedo D18",
+  "step_file": "print/LV11 Torpedo D18 PRINT.step",
+  "stl_file": "print/LV11 Torpedo D18 PRINT.STL"
+ },
+ {
+  "name": "Marker P83",
+  "kind": "printed",
+  "spec": "PETG, 100 % infill",
+  "qty": 2,
+  "note": "tail on the bed",
+  "steps": [
+   11
+  ],
+  "label": "LV11 Marker P83",
+  "step_file": "print/LV11 Marker P83 PRINT.step",
+  "stl_file": "print/LV11 Marker P83 PRINT.STL"
+ },
+ {
+  "name": "Underwater servo SER-20XX (Blue Trail)",
+  "kind": "purchased",
+  "spec": "SER-20XX",
+  "qty": 1,
+  "note": "team stock",
+  "steps": [
+   9
+  ],
+  "label": "SER-20XX Servo",
+  "link": "https://www.bluetrailengineering.com/"
+ },
+ {
+  "name": "Compression spring 9435K123 (torpedo)",
+  "kind": "McMaster",
+  "spec": "9435K123, OD 12.2, free 38.1",
+  "qty": 2,
+  "note": "loaded 22.41 mm",
+  "steps": [
+   4
+  ],
+  "label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)",
+  "link": "https://www.mcmaster.com/9435K123/"
+ },
+ {
+  "name": "Compression spring 9435K123 (marker)",
+  "kind": "McMaster",
+  "spec": "9435K123, OD 12.2, free 38.1",
+  "qty": 2,
+  "note": "loaded 27.46 mm",
+  "steps": [
+   7
+  ],
+  "label": "LV11 Spring 9435K123 (marker, loaded 27.46)",
+  "link": "https://www.mcmaster.com/9435K123/"
+ },
+ {
+  "name": "Flat head screw 4-40 x 1\", 100 deg, 18-8",
+  "kind": "McMaster",
+  "spec": "4-40 x 1\" 100 deg FH",
+  "qty": 4,
+  "note": "top cover -> body nuts",
+  "steps": [
+   5
+  ],
+  "label": "FHMS 4-40 x 1 100deg",
+  "link": "https://www.mcmaster.com/products/flat-head-screws/"
+ },
+ {
+  "name": "Flat head screw 4-40 x 2-1/2\", 100 deg, 18-8",
+  "kind": "McMaster",
+  "spec": "4-40 x 2-1/2\" 100 deg FH",
+  "qty": 1,
+  "note": "bottom cover D -> body nut",
+  "steps": [
+   7
+  ],
+  "label": "FHMS 4-40 x 2-1-2 100deg",
+  "link": "https://www.mcmaster.com/products/flat-head-screws/"
+ },
+ {
+  "name": "Flat head screw 4-40 x 2\", 100 deg, 18-8",
+  "kind": "McMaster",
+  "spec": "4-40 x 2\" 100 deg FH",
+  "qty": 1,
+  "note": "bottom cover C -> marker base nut",
+  "steps": [
+   7
+  ],
+  "label": "FHSCS 4-40 x 2 100deg",
+  "link": "https://www.mcmaster.com/products/flat-head-screws/"
+ },
+ {
+  "name": "Socket head screw 4-40 x 1-1/2\", 18-8",
+  "kind": "McMaster",
+  "spec": "4-40 x 1-1/2\" SHCS",
+  "qty": 3,
+  "note": "marker base -> body",
+  "steps": [
+   6
+  ],
+  "label": "SHCS 4-40 x 1-1-2",
+  "link": "https://www.mcmaster.com/products/socket-head-screws/"
+ },
+ {
+  "name": "Socket head screw 4-40 x 5/8\", 18-8",
+  "kind": "McMaster",
+  "spec": "92196A112",
+  "qty": 1,
+  "note": "pushing arm cross pin",
+  "steps": [
+   3
+  ],
+  "label": "SHCS 4-40 x 5-8 (92196A112)",
+  "link": "https://www.mcmaster.com/92196A112/"
+ },
+ {
+  "name": "Hex nut 4-40, 18-8",
+  "kind": "McMaster",
+  "spec": "91841A005",
+  "qty": 10,
+  "note": "captive in traps",
+  "steps": [
+   1,
+   3,
+   6
+  ],
+  "label": "Hex Nut 4-40 (91841A005)",
+  "link": "https://www.mcmaster.com/91841A005/"
+ },
+ {
+  "name": "Socket head screw 8-32 x 3/4\", 18-8",
+  "kind": "McMaster",
+  "spec": "8-32 x 3/4\" SHCS",
+  "qty": 2,
+  "note": "servo holder ears -> body",
+  "steps": [
+   8
+  ],
+  "label": "SHCS 8-32 x 3-4",
+  "link": "https://www.mcmaster.com/products/socket-head-screws/"
+ },
+ {
+  "name": "Socket head screw 8-32 x 2-1/2\", 18-8",
+  "kind": "McMaster",
+  "spec": "8-32 x 2-1/2\" SHCS",
+  "qty": 2,
+  "note": "crossbar arm fork -> keel",
+  "steps": [
+   10
+  ],
+  "label": "SHCS 8-32 x 2-1-2",
+  "link": "https://www.mcmaster.com/products/socket-head-screws/"
+ },
+ {
+  "name": "Hex nut 8-32, 18-8",
+  "kind": "McMaster",
+  "spec": "8-32 hex nut",
+  "qty": 6,
+  "note": "captive in traps",
+  "steps": [
+   1,
+   10
+  ],
+  "label": "Hex Nut 8-32",
+  "link": "https://www.mcmaster.com/products/hex-nuts/"
+ },
+ {
+  "name": "Socket head screw 8-32 x 3/8\", 18-8",
+  "kind": "McMaster",
+  "spec": "92196A192",
+  "qty": 2,
+  "note": "front crossbar -> crossbar arm nuts (robot fit) (not modelled)",
+  "steps": [
+   10
+  ],
+  "link": "https://www.mcmaster.com/92196A192/",
+  "label": null
+ },
+ {
+  "name": "Screw #8 + nut (team stock)",
+  "kind": "McMaster",
+  "spec": "#8, length to suit",
+  "qty": 2,
+  "note": "rear crossbar -> servo holder slab (not modelled)",
+  "steps": [
+   10
+  ],
+  "link": "https://www.mcmaster.com/products/socket-head-screws/",
+  "label": null
+ },
+ {
+  "name": "Socket head screw M3 x 45 + nut",
+  "kind": "McMaster",
+  "spec": "M3 x 45",
+  "qty": 4,
+  "note": "through the servo body (Blue Trail side mount) (not modelled)",
+  "steps": [
+   9
+  ],
+  "link": "https://www.mcmaster.com/products/socket-head-screws/",
+  "label": null
+ },
+ {
+  "name": "Helix cross pin screw #4-40 + nut",
+  "kind": "McMaster",
+  "spec": "4-40, length to suit",
+  "qty": 2,
+  "note": "team pins for the right/left helix (not modelled)",
+  "steps": [
+   2
+  ],
+  "link": "https://www.mcmaster.com/products/socket-head-screws/",
+  "label": null
+ }
+]

@@ -120,3 +120,60 @@ kin = dict(O=O.tolist(), steps=STEPS, phys=phys,
 json.dump(kin, open(OUT / 'kin.json', 'w'), indent=1)
 print('v11.glb', round((OUT / 'v11.glb').stat().st_size / 1e6, 2), 'MB; torps.glb', round((OUT / 'torps.glb').stat().st_size / 1e6, 2), 'MB;',
       sum(1 for k in meta if k.startswith('v11__')), 'launcher nodes')
+
+# ---------- BOM (counts from the assembly; links: printed -> print-ready STEP/STL in this repo, McMaster) ----------
+MC = 'https://www.mcmaster.com/'
+CAT = dict(shcs=MC + 'products/socket-head-screws/', fh=MC + 'products/flat-head-screws/', nut=MC + 'products/hex-nuts/')
+BOMDEF = {   # assembly label -> (display name, kind, spec, link or None (printed -> print files), note)
+    'LV11 Torpedo Body': ('Torpedo Body', 'printed', 'PETG, 100 % infill', None, 'holder face on the bed'),
+    'LV11 Marker Base': ('Marker Base', 'printed', 'PETG, 100 % infill', None, 'joint face on the bed'),
+    'LV11 Top Cover': ('Top Cover (open frame)', 'printed', 'PETG, 100 % infill', None, 'exit face on the bed; arrows = AMS colour'),
+    'LV11 Bottom Cover': ('Bottom Cover', 'printed', 'PETG, 100 % infill', None, 'exit face on the bed; arrows = AMS colour'),
+    'LV11 Crossbar Arm': ('Crossbar Arm', 'printed', 'PETG, 100 % infill', None, 'crossbar seat on the bed'),
+    'LV11 Servo Holder': ('Servo Holder', 'printed', 'PETG, 100 % infill', None, 'on its side'),
+    'LV11 Pushing Arm': ('Pushing Arm', 'printed', 'PETG, 100 % infill', None, 'thrust face on the bed'),
+    'LV11 Torpedo Shaft': ('Torpedo Shaft with 18T gear', 'printed', 'PETG, 100 % infill', None, 'gear face on the bed'),
+    'LV11 Marker Shaft': ('Marker Shaft', 'printed', 'PETG, 100 % infill', None, 'lobe end on the bed'),
+    'Servogear': ('Servo Gear 27T (team)', 'printed', 'PETG', None, 'team part, unchanged'),
+    'Right Helix Modified': ('Right Helix (team)', 'printed', 'PETG', None, 'team part, unchanged'),
+    'Left Helix Modified': ('Left Helix (team)', 'printed', 'PETG', None, 'team part, unchanged'),
+    'LV11 Torpedo D18': ('Torpedo D18', 'printed', 'PETG, 100 % infill', None, 'tail on the bed'),
+    'LV11 Marker P83': ('Marker P83', 'printed', 'PETG, 100 % infill', None, 'tail on the bed'),
+    'SER-20XX Servo': ('Underwater servo SER-20XX (Blue Trail)', 'purchased', 'SER-20XX', 'https://www.bluetrailengineering.com/', 'team stock'),
+    'LV11 Spring 9435K123 (torpedo, loaded 22.41)': ('Compression spring 9435K123 (torpedo)', 'McMaster', '9435K123, OD 12.2, free 38.1', MC + '9435K123/', 'loaded 22.41 mm'),
+    'LV11 Spring 9435K123 (marker, loaded 27.46)': ('Compression spring 9435K123 (marker)', 'McMaster', '9435K123, OD 12.2, free 38.1', MC + '9435K123/', 'loaded 27.46 mm'),
+    'FHMS 4-40 x 1 100deg': ('Flat head screw 4-40 x 1", 100 deg, 18-8', 'McMaster', '4-40 x 1" 100 deg FH', CAT['fh'], 'top cover -> body nuts'),
+    'FHMS 4-40 x 2-1-2 100deg': ('Flat head screw 4-40 x 2-1/2", 100 deg, 18-8', 'McMaster', '4-40 x 2-1/2" 100 deg FH', CAT['fh'], 'bottom cover D -> body nut'),
+    'FHSCS 4-40 x 2 100deg': ('Flat head screw 4-40 x 2", 100 deg, 18-8', 'McMaster', '4-40 x 2" 100 deg FH', CAT['fh'], 'bottom cover C -> marker base nut'),
+    'SHCS 4-40 x 1-1-2': ('Socket head screw 4-40 x 1-1/2", 18-8', 'McMaster', '4-40 x 1-1/2" SHCS', CAT['shcs'], 'marker base -> body'),
+    'SHCS 4-40 x 5-8 (92196A112)': ('Socket head screw 4-40 x 5/8", 18-8', 'McMaster', '92196A112', MC + '92196A112/', 'pushing arm cross pin'),
+    'Hex Nut 4-40 (91841A005)': ('Hex nut 4-40, 18-8', 'McMaster', '91841A005', MC + '91841A005/', 'captive in traps'),
+    'SHCS 8-32 x 3-4': ('Socket head screw 8-32 x 3/4", 18-8', 'McMaster', '8-32 x 3/4" SHCS', CAT['shcs'], 'servo holder ears -> body'),
+    'SHCS 8-32 x 2-1-2': ('Socket head screw 8-32 x 2-1/2", 18-8', 'McMaster', '8-32 x 2-1/2" SHCS', CAT['shcs'], 'crossbar arm fork -> keel'),
+    'Hex Nut 8-32': ('Hex nut 8-32, 18-8', 'McMaster', '8-32 hex nut', CAT['nut'], 'captive in traps'),
+}
+EXTRA = [  # hardware the launcher assembly does not model
+    ('Socket head screw 8-32 x 3/8", 18-8', 'McMaster', '92196A192', MC + '92196A192/', 2, 'front crossbar -> crossbar arm nuts (robot fit)', 10),
+    ('Screw #8 + nut (team stock)', 'McMaster', '#8, length to suit', CAT['shcs'], 2, 'rear crossbar -> servo holder slab', 10),
+    ('Socket head screw M3 x 45 + nut', 'McMaster', 'M3 x 45', CAT['shcs'], 4, 'through the servo body (Blue Trail side mount)', 9),
+    ('Helix cross pin screw #4-40 + nut', 'McMaster', '4-40, length to suit', CAT['shcs'], 2, 'team pins for the right/left helix', 2),
+]
+from collections import Counter, defaultdict
+cnt, steps = Counter(), defaultdict(set)
+for k, v in meta.items():
+    if v.get('label') in BOMDEF: cnt[v['label']] += 1; steps[v['label']].add(v['step'])
+files = {}
+for f in sorted((W / 'v11/export/print').glob('* PRINT.step')):
+    stem = f.name.replace(' PRINT.step', ''); files[stem] = stem
+bom = []
+for lab, (name, kind, spec, link, note) in BOMDEF.items():
+    stem = lab.replace('reused/', '')
+    row = dict(name=name, kind=kind, spec=spec, qty=cnt[lab], note=note, steps=sorted(steps[lab]), label=lab)
+    if kind == 'printed' and stem in files:
+        row['step_file'] = f'print/{stem} PRINT.step'; row['stl_file'] = f'print/{stem} PRINT.STL'
+    else: row['link'] = link
+    bom.append(row)
+for name, kind, spec, link, q, note, st in EXTRA:
+    bom.append(dict(name=name, kind=kind, spec=spec, qty=q, note=note + ' (not modelled)', steps=[st], link=link, label=None))
+json.dump(bom, open(OUT / 'bom.json', 'w'), indent=1)
+print('bom rows', len(bom), 'printed', sum(r['qty'] for r in bom if r['kind'] == 'printed'))
