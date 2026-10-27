@@ -18,6 +18,27 @@
   "Crossbar arm onto the keel: 2 bolts + nuts, crossbar captive nuts in their side slots.",
   "Load: torpedoes through the top cover, markers up into the bottom cover."
  ],
+ "phys": {
+  "slow": 25,
+  "k": 3330.9488614044976,
+  "torpedo": {
+   "stroke": 15.690000000000001,
+   "loaded": 22.41,
+   "v0": 4.563195444677785,
+   "c": 1.2923768661288635,
+   "tq": 0.005400994690279415,
+   "base_z": 1202.4694
+  },
+  "marker": {
+   "stroke": 10.64,
+   "loaded": 27.46,
+   "v0": 5.195500698029535,
+   "c": 2.4489580527983423,
+   "tq": 0.0032168743473437386,
+   "top_y": 859.853,
+   "sink": 0.15
+  }
+ },
  "axes": {
   "shaft": [
    600.414,

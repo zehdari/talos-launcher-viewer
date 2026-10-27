@@ -46,6 +46,15 @@ def plan(n):
         if key in n: return val
     if 'Torpedo Body' in n: return 0, u(0, 0, 1), 0
     raise SystemExit('no plan for ' + n)
+def category(n):
+    if any(k in n for k in ('Torpedo Body', 'Marker Base', 'Top Cover', 'Bottom Cover', 'Crossbar Arm', 'Servo Holder')): return 'Structure'
+    if any(k in n for k in ('Torpedo Shaft', 'Pushing Arm', 'Marker Shaft', 'Helix', 'Servogear', 'SER-20XX')): return 'Drivetrain'
+    if any(k in n for k in ('Torpedo D18', 'Marker P83', 'Spring')): return 'Payloads + springs'
+    return 'Fasteners'
+def spring(n):
+    m = re.match(r'LV11 Spring 9435K123 \((torpedo|marker), loaded [0-9.]+\)-(\d)', n)
+    if not m: return None
+    return dict(kind=m.group(1), side=('L' if m.group(2) == '1' else 'R') if m.group(1) == 'torpedo' else ('left' if m.group(2) == '1' else 'right'))
 def rotgroup(n):
     if any(k in n for k in ('Torpedo Shaft', 'Pushing Arm', 'Right Helix', 'SHCS 4-40 x 5-8', 'Hex Nut 4-40 (91841A005)-10')): return 'shaft'
     if 'Servogear' in n: return 'servo'
@@ -77,7 +86,7 @@ def add(scene, name, m, color, group, comp, target=40000):
     st, ap, d = plan(comp)
     meta[name] = dict(group=group, closed=bool(m.is_watertight), color=list(color), faces=len(m.faces),
                       step=st, approach=[round(float(v), 3) for v in ap * d], rot=rotgroup(comp),
-                      label=re.sub(r'-\d+$', '', comp))
+                      label=re.sub(r'-\d+$', '', comp), inst=int(re.search(r'-(\d+)$', comp).group(1)), cat=category(comp), spring=spring(comp))
 v11, tp = trimesh.Scene(), trimesh.Scene()
 for f in sorted(SRC.glob('*.STL')):
     n = re.sub(r'^v11 - ', '', f.stem)
@@ -93,7 +102,15 @@ old = json.load(open(OUT / 'parts.json'))
 meta.update({k: v for k, v in old.items() if k.startswith(('robot__', 'v8__', 'solo__', 'rail'))})
 json.dump(meta, open(OUT / 'parts.json', 'w'), indent=0)
 TO = 26 * math.sqrt(0.5)
-kin = dict(O=O.tolist(), steps=STEPS,
+# spring launch physics (McMaster 9435K123: free 38.1 mm; torpedo spring loaded 22.41 holds 0.41 J -> k)
+FREE, LT, LM = 38.1, 22.41, 27.46
+k = 2 * 0.41 / ((FREE - LT) / 1000) ** 2
+E_m = 0.5 * k * ((FREE - LM) / 1000) ** 2
+def coast(m_kg, d_mm, cd): return 0.5 * 1000 * cd * math.pi * (d_mm / 2000) ** 2 / m_kg      # drag c [1/m]: dv/dt = -c v^2
+mt, mm = 0.0358 * 1.1, 0.0127 * 1.1                                                             # + ~10 % added mass in water
+phys = dict(slow=25, k=k, torpedo=dict(stroke=FREE - LT, loaded=LT, v0=math.sqrt(2 * 0.41 / mt), c=coast(mt, 18.0, 0.4), tq=math.pi / 2 * math.sqrt(mt / k), base_z=O[2] + 2.918),
+            marker=dict(stroke=FREE - LM, loaded=LM, v0=math.sqrt(2 * E_m / mm), c=coast(mm, 13.2, 0.5), tq=math.pi / 2 * math.sqrt(mm / k), top_y=O[1] - 32.98, sink=0.15))
+kin = dict(O=O.tolist(), steps=STEPS, phys=phys,
            axes=dict(shaft=[O[0], O[1]], servo=[O[0], O[1] - 22.5], marker=[O[0], O[2] - 23.0]),
            ratio_servo_to_shaft=-27 / 18,          # shaft angle = -1.5 x servo angle (external spur)
            torpedo=dict(L=dict(axis=[O[0] - TO, O[1] + TO], release=51.5, unlock=47),

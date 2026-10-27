@@ -43,6 +43,7 @@
       <label class="row"><input type="checkbox" id="tV9" checked><span class="sw" style="background:#eb8c37"></span>Launcher V11 (SolidWorks)</label>
       <label class="row"><input type="checkbox" id="tTorps" checked><span class="sw" style="background:#f2731a"></span>Slim torpedoes ×2</label>
       <label class="row"><input type="checkbox" id="tV8"><span class="sw" style="background:#8c8c99"></span>Launcher V8 + B (old, compare)</label>
+      <details id="partsBox" style="margin-top:6px"><summary style="cursor:pointer">Parts: show / hide each</summary><div id="partsList" style="margin-top:4px"></div></details>
     </div>
     <div class="torp-only">
       <div class="sec">Show</div>
@@ -69,7 +70,7 @@
       <div class="sec">Fire (servo drives the gear train)</div>
       <div class="btns"><button id="fireL">Fire left</button><button id="fireR">Fire right</button><button id="dropR">Drop right marker</button><button id="dropL">Drop left marker</button><button id="reset">Reload</button></div>
       <div class="sub" id="servoTxt" style="margin-top:6px">Servo 0.0° · torpedo shaft 0.0° · marker shaft 0.0°</div>
-      <div class="sub">Servo 27T → shaft 18T (1.5:1), helix pair 20:20 to the marker shaft. One direction fires left then right torpedo, the other right then left marker, so firing the second one passes the first.</div>
+      <div class="sub">Slow motion ×1/25: the spring stroke is over in ~5 ms, then water drag slows the payload. Servo 27T → shaft 18T (1.5:1), helix pair 20:20 to the marker shaft. One direction fires left then right torpedo, the other right then left marker, so firing the second one passes the first.</div>
       <div class="sec">Assembly procedure</div>
       <div class="btns"><button id="aPrev">◀</button><button id="aPlay">▶ Play</button><button id="aNext">▶|</button><button id="aDone">Done</button></div>
       <div class="sub" id="asmTxt" style="margin-top:6px">Step through how the launcher goes together.</div>
@@ -100,7 +101,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=14';
+const V = '?v=15';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -224,6 +225,14 @@ fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
     const pivot = new THREE.Group(); pivot.position.set(k.axis[0], 0, k.axis[1]); v11.add(pivot); pivot.attach(m);
     markers[side] = { pivot, out: null, ...k };
   }
+  for (const o of all) {                                    // springs stretch from their fixed end as the payload leaves
+    const sp = META[o.name].spring; if (!sp) continue;
+    const g = new THREE.Group();
+    if (sp.kind === 'torpedo') { const a = KIN.torpedo[sp.side].axis; g.position.set(a[0], a[1], KIN.phys.torpedo.base_z); torp[sp.side].spring = g; }
+    else { const a = KIN.marker[sp.side].axis; g.position.set(a[0], KIN.phys.marker.top_y, a[1]); markers[sp.side].spring = g; }
+    o.parent.add(g); g.attach(o);
+  }
+  buildPartsList(all);
   for (const o of all) { o.userData.home = o.position.clone(); o.userData.step = META[o.name].step; o.userData.ap = new THREE.Vector3(...META[o.name].approach); ASM.push(o); }
   // labels on the standalone torpedoes
   const L = { B: 'B, tested · 129.5 mm', D18: 'Slim Ø18, new · 150 mm', C: 'C, fat-body alternate' };
@@ -242,6 +251,29 @@ fetch('parts.json' + V).then(r => r.json()).then(meta => { META = meta;
   syncSolo(); $('load').style.display = 'none';
   setMode('robot');
 }).catch(e => { $('load').textContent = 'Load failed: ' + e; });
+
+// ---------- per-part show / hide ----------
+function buildPartsList(all) {
+  const box = $('partsList'), cats = {};
+  for (const o of all) { const m = META[o.name]; (cats[m.cat] = cats[m.cat] || []).push(o); }
+  const order = ['Structure', 'Drivetrain', 'Payloads + springs', 'Fasteners'];
+  for (const c of order) { const list = cats[c]; if (!list) continue;
+    list.sort((a, b) => (META[a.name].label + META[a.name].inst).localeCompare(META[b.name].label + META[b.name].inst));
+    const head = document.createElement('label'); head.className = 'row'; head.style.cssText = 'font-weight:600;margin-top:6px';
+    const hc = document.createElement('input'); hc.type = 'checkbox'; hc.checked = true; head.append(hc, ' ' + c + ' (' + list.length + ')'); box.append(head);
+    const boxes = [];
+    const dup = l => list.filter(o => META[o.name].label === l).length > 1;
+    for (const o of list) { const m = META[o.name];
+      const r = document.createElement('label'); r.className = 'row'; r.style.paddingLeft = '14px';
+      const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = true;
+      const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = '#' + new THREE.Color().setRGB(...m.color, THREE.SRGBColorSpace).getHexString();
+      r.append(cb, sw, m.label + (dup(m.label) ? ' #' + m.inst : '')); box.append(r);
+      cb.onchange = () => { o.userData.hidden = !cb.checked; o.visible = cb.checked && (!asmOn || o.userData.step <= asmK); };
+      boxes.push(cb);
+    }
+    hc.onchange = () => boxes.forEach(cb => { cb.checked = hc.checked; cb.onchange(); });
+  }
+}
 
 // ---------- UI ----------
 let mode = 'robot';
@@ -308,13 +340,18 @@ function stepFire(now) {
   const D = THREE.MathUtils.degToRad;
   const shaft = KIN.ratio_servo_to_shaft * servo;
   ROT.servo.rotation.z = D(servo); ROT.shaft.rotation.z = D(shaft); ROT.marker.rotation.y = D(shaft);
+  const PH = KIN.phys;
+  const travel = (P, t) => t < P.tq ? P.stroke * (1 - Math.cos(Math.PI / 2 * t / P.tq))            // spring stroke (SHM from rest)
+                                    : P.stroke + 1000 * Math.log(1 + P.v0 * P.c * (t - P.tq)) / P.c + 1000 * (P.sink || 0) * (t - P.tq);   // coast against drag (+ sink)
   for (const T of Object.values(torp)) {
     if (T.out == null) {
       T.pivot.rotation.z = D(T.unlock) * ramp(servo, T.release);
       if (servo >= T.release - 0.01) T.out = now;
     } else {
-      const t = (now - T.out) / 1000; T.pivot.rotation.z = D(T.unlock); T.pivot.position.z = 600 * t + 900 * t * t;
-      if (T.pivot.position.z > 2500) T.pivot.visible = false;
+      const t = (now - T.out) / 1000 / PH.slow, d = travel(PH.torpedo, t);
+      T.pivot.rotation.z = D(T.unlock); T.pivot.position.z = d;
+      if (T.spring) T.spring.scale.z = (PH.torpedo.loaded + Math.min(d, PH.torpedo.stroke)) / PH.torpedo.loaded;
+      if (d > 2500) T.pivot.visible = false;
     }
   }
   for (const M of Object.values(markers)) {
@@ -322,14 +359,16 @@ function stepFire(now) {
       M.pivot.rotation.y = D(M.lock) * ramp(servo, M.release);
       if (servo <= M.release + 0.01) M.out = now;
     } else {
-      const t = (now - M.out) / 1000; M.pivot.rotation.y = D(M.lock); M.pivot.position.y = -400 * t - 300 * t * t;
-      if (M.pivot.position.y < -1500) M.pivot.visible = false;
+      const t = (now - M.out) / 1000 / PH.slow, d = travel(PH.marker, t);
+      M.pivot.rotation.y = D(M.lock); M.pivot.position.y = -d;
+      if (M.spring) M.spring.scale.y = (PH.marker.loaded + Math.min(d, PH.marker.stroke)) / PH.marker.loaded;
+      if (d > 1500) M.pivot.visible = false;
     }
   }
   $('servoTxt').textContent = `Servo ${servo.toFixed(1)}° · torpedo shaft ${shaft.toFixed(1)}° · marker shaft ${shaft.toFixed(1)}°`;
 }
 // reload also brings launched payloads back into view
-const _reload = reload; $('reset').onclick = () => { _reload(); for (const T of Object.values(torp)) T.pivot.visible = true; for (const M of Object.values(markers)) M.pivot.visible = true; };
+const _reload = reload; $('reset').onclick = () => { _reload(); for (const T of Object.values(torp)) { T.pivot.visible = true; if (T.spring) T.spring.scale.set(1, 1, 1); } for (const M of Object.values(markers)) { M.pivot.visible = true; if (M.spring) M.spring.scale.set(1, 1, 1); } };
 
 // ---------- assembly procedure ----------
 let asmOn = false, asmK = 0, asmT0 = 0, asmPlay = false;
@@ -340,7 +379,7 @@ function asmShow(k) {
 }
 function asmStop() {
   asmOn = false; asmPlay = false; $('aPlay').textContent = '▶ Play'; $('aPlay').classList.remove('on');
-  for (const o of ASM) { o.visible = true; o.position.copy(o.userData.home); }
+  for (const o of ASM) { o.visible = !o.userData.hidden; o.position.copy(o.userData.home); }
   $('asmTxt').textContent = 'Step through how the launcher goes together.';
 }
 $('aPlay').onclick = () => {
@@ -356,7 +395,7 @@ function stepAsm(now) {
   const t = (now - asmT0) / 1000, k = Math.min(1, t / ADUR), e = 1 - Math.pow(1 - k, 3);
   for (const o of ASM) {
     const s = o.userData.step;
-    o.visible = s <= asmK;
+    o.visible = s <= asmK && !o.userData.hidden;
     if (s < asmK) o.position.copy(o.userData.home);
     else if (s === asmK) o.position.copy(o.userData.home).addScaledVector(o.userData.ap, 1 - e);
   }

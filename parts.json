@@ -15,7 +15,10 @@
 70.0
 ],
 "rot": null,
-"label": "FHMS 4-40 x 1 100deg"
+"label": "FHMS 4-40 x 1 100deg",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__FHMS_4_40_x_1_100deg_2": {
 "group": "v11",
@@ -33,7 +36,10 @@
 70.0
 ],
 "rot": null,
-"label": "FHMS 4-40 x 1 100deg"
+"label": "FHMS 4-40 x 1 100deg",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__FHMS_4_40_x_1_100deg_3": {
 "group": "v11",
@@ -51,7 +57,10 @@
 70.0
 ],
 "rot": null,
-"label": "FHMS 4-40 x 1 100deg"
+"label": "FHMS 4-40 x 1 100deg",
+"inst": 3,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__FHMS_4_40_x_1_100deg_4": {
 "group": "v11",
@@ -69,7 +78,10 @@
 70.0
 ],
 "rot": null,
-"label": "FHMS 4-40 x 1 100deg"
+"label": "FHMS 4-40 x 1 100deg",
+"inst": 4,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__FHMS_4_40_x_2_1_2_100deg_1": {
 "group": "v11",
@@ -87,7 +99,10 @@
 0.0
 ],
 "rot": null,
-"label": "FHMS 4-40 x 2-1-2 100deg"
+"label": "FHMS 4-40 x 2-1-2 100deg",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__FHSCS_4_40_x_2_100deg_1": {
 "group": "v11",
@@ -105,7 +120,10 @@
 0.0
 ],
 "rot": null,
-"label": "FHSCS 4-40 x 2 100deg"
+"label": "FHSCS 4-40 x 2 100deg",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_1": {
 "group": "v11",
@@ -123,7 +141,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_10": {
 "group": "v11",
@@ -141,7 +162,10 @@
 0.0
 ],
 "rot": "shaft",
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 10,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_2": {
 "group": "v11",
@@ -159,7 +183,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_3": {
 "group": "v11",
@@ -177,7 +204,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 3,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_4": {
 "group": "v11",
@@ -195,7 +225,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 4,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_5": {
 "group": "v11",
@@ -213,7 +246,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 5,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_6": {
 "group": "v11",
@@ -231,7 +267,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 6,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_7": {
 "group": "v11",
@@ -249,7 +288,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 7,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_8": {
 "group": "v11",
@@ -267,7 +309,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 8,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_4_40_91841A005_9": {
 "group": "v11",
@@ -285,7 +330,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 4-40 (91841A005)"
+"label": "Hex Nut 4-40 (91841A005)",
+"inst": 9,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_1": {
 "group": "v11",
@@ -303,7 +351,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_2": {
 "group": "v11",
@@ -321,7 +372,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_3": {
 "group": "v11",
@@ -339,7 +393,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 3,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_4": {
 "group": "v11",
@@ -357,7 +414,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 4,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_5": {
 "group": "v11",
@@ -375,7 +435,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 5,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Hex_Nut_8_32_6": {
 "group": "v11",
@@ -393,7 +456,10 @@
 0.0
 ],
 "rot": null,
-"label": "Hex Nut 8-32"
+"label": "Hex Nut 8-32",
+"inst": 6,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__LV11_Bottom_Cover_1": {
 "group": "v11",
@@ -403,7 +469,7 @@
 0.78,
 0.47
 ],
-"faces": 4900,
+"faces": 5142,
 "step": 7,
 "approach": [
 0.0,
@@ -411,7 +477,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Bottom Cover"
+"label": "LV11 Bottom Cover",
+"inst": 1,
+"cat": "Structure",
+"spring": null
 },
 "v11__LV11_Crossbar_Arm_1": {
 "group": "v11",
@@ -429,7 +498,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Crossbar Arm"
+"label": "LV11 Crossbar Arm",
+"inst": 1,
+"cat": "Structure",
+"spring": null
 },
 "v11__LV11_Marker_Base_1": {
 "group": "v11",
@@ -447,7 +519,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Marker Base"
+"label": "LV11 Marker Base",
+"inst": 1,
+"cat": "Structure",
+"spring": null
 },
 "v11__Marker_P83_left": {
 "group": "v11",
@@ -465,7 +540,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Marker P83"
+"label": "LV11 Marker P83",
+"inst": 1,
+"cat": "Payloads + springs",
+"spring": null
 },
 "v11__Marker_P83_right": {
 "group": "v11",
@@ -483,7 +561,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Marker P83"
+"label": "LV11 Marker P83",
+"inst": 2,
+"cat": "Payloads + springs",
+"spring": null
 },
 "v11__LV11_Marker_Shaft_1": {
 "group": "v11",
@@ -501,7 +582,10 @@
 0.0
 ],
 "rot": "marker",
-"label": "LV11 Marker Shaft"
+"label": "LV11 Marker Shaft",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__LV11_Pushing_Arm_1": {
 "group": "v11",
@@ -519,7 +603,10 @@
 70.0
 ],
 "rot": "shaft",
-"label": "LV11 Pushing Arm"
+"label": "LV11 Pushing Arm",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__LV11_Servo_Holder_1": {
 "group": "v11",
@@ -537,7 +624,10 @@
 -110.0
 ],
 "rot": null,
-"label": "LV11 Servo Holder"
+"label": "LV11 Servo Holder",
+"inst": 1,
+"cat": "Structure",
+"spring": null
 },
 "v11__LV11_Spring_9435K123_marker_loaded_27_46_1": {
 "group": "v11",
@@ -555,7 +645,13 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Spring 9435K123 (marker, loaded 27.46)"
+"label": "LV11 Spring 9435K123 (marker, loaded 27.46)",
+"inst": 1,
+"cat": "Payloads + springs",
+"spring": {
+"kind": "marker",
+"side": "left"
+}
 },
 "v11__LV11_Spring_9435K123_marker_loaded_27_46_2": {
 "group": "v11",
@@ -573,7 +669,13 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Spring 9435K123 (marker, loaded 27.46)"
+"label": "LV11 Spring 9435K123 (marker, loaded 27.46)",
+"inst": 2,
+"cat": "Payloads + springs",
+"spring": {
+"kind": "marker",
+"side": "right"
+}
 },
 "v11__LV11_Spring_9435K123_torpedo_loaded_22_41_1": {
 "group": "v11",
@@ -591,7 +693,13 @@
 90.0
 ],
 "rot": null,
-"label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)"
+"label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)",
+"inst": 1,
+"cat": "Payloads + springs",
+"spring": {
+"kind": "torpedo",
+"side": "L"
+}
 },
 "v11__LV11_Spring_9435K123_torpedo_loaded_22_41_2": {
 "group": "v11",
@@ -609,9 +717,15 @@
 90.0
 ],
 "rot": null,
-"label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)"
+"label": "LV11 Spring 9435K123 (torpedo, loaded 22.41)",
+"inst": 2,
+"cat": "Payloads + springs",
+"spring": {
+"kind": "torpedo",
+"side": "R"
+}
 },
-"v11__LV11_Top_Cover_1": {
+"v11__LV11_Top_Cover_2": {
 "group": "v11",
 "closed": true,
 "color": [
@@ -619,7 +733,7 @@
 0.69,
 0.35
 ],
-"faces": 8384,
+"faces": 6366,
 "step": 5,
 "approach": [
 0.0,
@@ -627,7 +741,10 @@
 90.0
 ],
 "rot": null,
-"label": "LV11 Top Cover"
+"label": "LV11 Top Cover",
+"inst": 2,
+"cat": "Structure",
+"spring": null
 },
 "v11__LV11_Torpedo_Body_1": {
 "group": "v11",
@@ -645,7 +762,10 @@
 0.0
 ],
 "rot": null,
-"label": "LV11 Torpedo Body"
+"label": "LV11 Torpedo Body",
+"inst": 1,
+"cat": "Structure",
+"spring": null
 },
 "tp__Torpedo_D18_L": {
 "group": "torps",
@@ -663,7 +783,10 @@
 170.0
 ],
 "rot": null,
-"label": "LV11 Torpedo D18"
+"label": "LV11 Torpedo D18",
+"inst": 1,
+"cat": "Payloads + springs",
+"spring": null
 },
 "tp__Torpedo_D18_R": {
 "group": "torps",
@@ -681,7 +804,10 @@
 170.0
 ],
 "rot": null,
-"label": "LV11 Torpedo D18"
+"label": "LV11 Torpedo D18",
+"inst": 2,
+"cat": "Payloads + springs",
+"spring": null
 },
 "v11__LV11_Torpedo_Shaft_1": {
 "group": "v11",
@@ -699,7 +825,10 @@
 -130.0
 ],
 "rot": "shaft",
-"label": "LV11 Torpedo Shaft"
+"label": "LV11 Torpedo Shaft",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__Left_Helix_Modified_1": {
 "group": "v11",
@@ -717,7 +846,10 @@
 0.0
 ],
 "rot": "marker",
-"label": "Left Helix Modified"
+"label": "Left Helix Modified",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__Right_Helix_Modified_1": {
 "group": "v11",
@@ -735,7 +867,10 @@
 0.0
 ],
 "rot": "shaft",
-"label": "Right Helix Modified"
+"label": "Right Helix Modified",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__SER_20XX_Servo_1": {
 "group": "v11",
@@ -753,7 +888,10 @@
 0.0
 ],
 "rot": null,
-"label": "SER-20XX Servo"
+"label": "SER-20XX Servo",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 },
 "v11__SHCS_4_40_x_1_1_2_1": {
 "group": "v11",
@@ -771,7 +909,10 @@
 0.0
 ],
 "rot": null,
-"label": "SHCS 4-40 x 1-1-2"
+"label": "SHCS 4-40 x 1-1-2",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_4_40_x_1_1_2_2": {
 "group": "v11",
@@ -789,7 +930,10 @@
 0.0
 ],
 "rot": null,
-"label": "SHCS 4-40 x 1-1-2"
+"label": "SHCS 4-40 x 1-1-2",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_4_40_x_1_1_2_3": {
 "group": "v11",
@@ -807,7 +951,10 @@
 0.0
 ],
 "rot": null,
-"label": "SHCS 4-40 x 1-1-2"
+"label": "SHCS 4-40 x 1-1-2",
+"inst": 3,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_4_40_x_5_8_92196A112_1": {
 "group": "v11",
@@ -825,7 +972,10 @@
 0.0
 ],
 "rot": "shaft",
-"label": "SHCS 4-40 x 5-8 (92196A112)"
+"label": "SHCS 4-40 x 5-8 (92196A112)",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_8_32_x_2_1_2_1": {
 "group": "v11",
@@ -843,7 +993,10 @@
 0.0
 ],
 "rot": null,
-"label": "SHCS 8-32 x 2-1-2"
+"label": "SHCS 8-32 x 2-1-2",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_8_32_x_2_1_2_2": {
 "group": "v11",
@@ -861,7 +1014,10 @@
 0.0
 ],
 "rot": null,
-"label": "SHCS 8-32 x 2-1-2"
+"label": "SHCS 8-32 x 2-1-2",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_8_32_x_3_4_1": {
 "group": "v11",
@@ -879,7 +1035,10 @@
 -50.0
 ],
 "rot": null,
-"label": "SHCS 8-32 x 3-4"
+"label": "SHCS 8-32 x 3-4",
+"inst": 1,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__SHCS_8_32_x_3_4_2": {
 "group": "v11",
@@ -897,7 +1056,10 @@
 -50.0
 ],
 "rot": null,
-"label": "SHCS 8-32 x 3-4"
+"label": "SHCS 8-32 x 3-4",
+"inst": 2,
+"cat": "Fasteners",
+"spring": null
 },
 "v11__Servogear_1": {
 "group": "v11",
@@ -915,6 +1077,9 @@
 45.0
 ],
 "rot": "servo",
-"label": "Servogear"
+"label": "Servogear",
+"inst": 1,
+"cat": "Drivetrain",
+"spring": null
 }
 }
