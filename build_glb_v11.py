@@ -18,7 +18,7 @@ c15, s15 = math.cos(math.radians(15)), math.sin(math.radians(15))
 # component -> (step, approach unit vector, distance mm)
 NUT_UA = {1: 90, 2: 113, 3: 23, 4: 293}
 def plan(n):
-    if n.startswith('Set Screw 4-40 x 1-2'): return 4, u(-1 if n.endswith('-1') else 1, 0, 0), 40     # in from the outboard side
+    if n.startswith('SHCS 4-40 x 5-8') and not n.endswith('-1'): return 4, u(-1 if n.endswith('-2') else 1, 0, 0), 40   # spring retention, from the side
     m = re.match(r'Hex Nut 4-40 \(91841A005\)-(\d+)', n)
     if m:
         i = int(m.group(1))
@@ -111,9 +111,9 @@ SEQ = [(0, 'LV11 Torpedo Body', None, 'Torpedo body: the frame everything mounts
        (3, PA, None, 'Sub-assembly on the bench: pushing arm.', PA),
        (3, 'Hex Nut 4-40 (91841A005)', {10}, 'Cross-pin nut into the pushing arm pocket.', PA),
        ('MOUNT', PA, 'Pushing arm onto the shaft top, down to the thrust face.'),
-       (3, 'SHCS 4-40 x 5-8 (92196A112)', None, 'Cross-pin screw through the arm and shaft into the nut.', None),
+       (3, 'SHCS 4-40 x 5-8 (92196A112)', {1}, 'Cross-pin screw through the arm and shaft into the nut.', None),
        (4, 'LV11 Spring 9435K123 (torpedo, loaded 22.41)', None, 'Torpedo springs onto their guide pins.', None),
-       (4, 'Set Screw 4-40 x 1-2', None, "Spring retention set screws 4-40 x 1/2 in from the outboard side; tighten until the tip bears on the spring's closed end coil.", None),
+       (4, 'SHCS 4-40 x 5-8 (92196A112)', {2, 3}, "Spring retention cap screws 4-40 x 5/8 in from the outboard side onto the spotface; the tip presses the spring's closed end coil.", None),
        (5, 'LV11 Top Cover', None, 'Top cover onto the body.', None),
        (5, 'FHMS 4-40 x 1 100deg', None, 'Flat-head 4-40 x 1 screws through the top cover into the captive nuts.', None),
        (6, MB, None, 'Sub-assembly on the bench: marker base.', MB),
@@ -200,10 +200,9 @@ BOMDEF = {   # assembly label -> (display name, kind, spec, link or None (printe
     'FHMS 4-40 x 2-1-2 100deg': ('Flat head screw 4-40 x 2-1/2", 100 deg, 18-8', 'McMaster', '4-40 x 2-1/2" 100 deg FH', CAT['fh'], 'bottom cover D -> body nut'),
     'FHSCS 4-40 x 2 100deg': ('Flat head screw 4-40 x 2", 100 deg, 18-8', 'McMaster', '4-40 x 2" 100 deg FH', CAT['fh'], 'bottom cover C -> marker base nut'),
     'SHCS 4-40 x 1-1-2': ('Socket head screw 4-40 x 1-1/2", 18-8', 'McMaster', '4-40 x 1-1/2" SHCS', CAT['shcs'], 'marker base -> body'),
-    'SHCS 4-40 x 5-8 (92196A112)': ('Socket head screw 4-40 x 5/8", 18-8', 'McMaster', '92196A112', MC + '92196A112/', 'pushing arm cross pin'),
+    'SHCS 4-40 x 5-8 (92196A112)': ('Socket head screw 4-40 x 5/8", 18-8', 'McMaster', '92196A112', MC + '92196A112/', 'pushing arm cross pin (1) + torpedo spring retention from the side (2)'),
     'Hex Nut 4-40 (91841A005)': ('Hex nut 4-40, 18-8', 'McMaster', '91841A005', MC + '91841A005/', 'captive in traps'),
     'SHCS 8-32 x 3-4': ('Socket head screw 8-32 x 3/4", 18-8', 'McMaster', '8-32 x 3/4" SHCS', CAT['shcs'], 'servo holder ears -> body'),
-    'Set Screw 4-40 x 1-2': ('Set screw 4-40 x 1/2", cup point, 18-8', 'McMaster', '4-40 x 1/2" set screw', MC + 'products/set-screws/', 'torpedo spring retention: side of the body, tip on the end coil'),
     'SHCS 8-32 x 2-1-2': ('Socket head screw 8-32 x 2-1/2", 18-8', 'McMaster', '8-32 x 2-1/2" SHCS', CAT['shcs'], 'crossbar arm fork -> keel'),
     'Hex Nut 8-32': ('Hex nut 8-32, 18-8', 'McMaster', '8-32 hex nut', CAT['nut'], 'captive in traps'),
 }

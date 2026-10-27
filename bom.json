@@ -269,10 +269,11 @@
   "name": "Socket head screw 4-40 x 5/8\", 18-8",
   "kind": "McMaster",
   "spec": "92196A112",
-  "qty": 1,
-  "note": "pushing arm cross pin",
+  "qty": 3,
+  "note": "pushing arm cross pin (1) + torpedo spring retention from the side (2)",
   "steps": [
-   8
+   8,
+   10
   ],
   "label": "SHCS 4-40 x 5-8 (92196A112)",
   "link": "https://www.mcmaster.com/92196A112/"
@@ -302,18 +303,6 @@
   ],
   "label": "SHCS 8-32 x 3-4",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
- },
- {
-  "name": "Set screw 4-40 x 1/2\", cup point, 18-8",
-  "kind": "McMaster",
-  "spec": "4-40 x 1/2\" set screw",
-  "qty": 2,
-  "note": "torpedo spring retention: side of the body, tip on the end coil",
-  "steps": [
-   10
-  ],
-  "label": "Set Screw 4-40 x 1-2",
-  "link": "https://www.mcmaster.com/products/set-screws/"
  },
  {
   "name": "Socket head screw 8-32 x 2-1/2\", 18-8",
