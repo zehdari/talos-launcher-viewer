@@ -7,7 +7,7 @@
 <style>
   :root { --bg:#0f1216; --panel:rgba(20,24,30,.9); --fg:#e8ecf1; --mut:#9aa4b2; --acc:#ff7a1a; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; overflow:hidden; }
-  #c { position:fixed; inset:0; display:block; touch-action:none; }
+  #c { position:fixed; inset:0; display:block; width:100%; height:100%; touch-action:none; }
   #ui { position:fixed; left:10px; top:10px; width:280px; max-height:calc(100% - 20px); overflow:auto; background:var(--panel); border:1px solid #2a313b; border-radius:12px; padding:10px 12px; backdrop-filter:blur(6px); z-index:2; }
   #ui.min .body { display:none; }
   h1 { font-size:15px; margin:0 0 2px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
@@ -100,7 +100,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=13';
+const V = '?v=14';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -377,7 +377,7 @@ canvas.addEventListener('pointerup', e => {
 });
 
 function resize() {
-  const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labels.setSize(w, h); camera.aspect = w / h;
+  const w = innerWidth, h = innerHeight; renderer.setSize(w, h); labels.setSize(w, h); camera.aspect = w / h;
   const r = $('ui').getBoundingClientRect();
   if (w > 600) camera.setViewOffset(w, h, -Math.round(r.right / 2), 0, w, h);          // panel on the left: shift right
   else camera.setViewOffset(w, h, 0, -Math.round(r.bottom / 2), w, h);                 // panel on top: shift down
