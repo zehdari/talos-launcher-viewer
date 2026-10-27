@@ -110,7 +110,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const V = '?v=21';
+const V = '?v=23';
 const $ = id => document.getElementById(id);
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, stencil: true });
@@ -143,11 +143,14 @@ const VIEWS = {
 };
 let anim = null;
 let FIT = null;
-function fitView(v) {           // camera distance so the launcher fits the screen area the panel leaves free
+function fitDist(R) {          // distance at which a sphere of radius R fills the screen area the panel leaves free
   const r = $('ui').getBoundingClientRect(), w = innerWidth, h = innerHeight, wide = w > 600;
   const wf = wide ? w - r.right : w, hf = wide ? h : h - r.bottom, t20 = Math.tan(THREE.MathUtils.degToRad(20));
   const half = Math.min(Math.atan(t20 * wf / h), Math.atan(t20 * hf / h));
-  const d = Math.max(v.k * FIT.R, 0.92 * FIT.R / Math.sin(half)) * (v.k > 3 ? 1.6 : 1);
+  return R / Math.sin(half);
+}
+function fitView(v) {           // camera distance so the launcher fits the screen area the panel leaves free
+  const d = Math.max(v.k * FIT.R, 0.92 * fitDist(FIT.R)) * (v.k > 3 ? 1.6 : 1);
   return [FIT.C.clone().addScaledVector(v.dir, d), FIT.C.clone()];
 }
 function setView(k, instant) {
@@ -438,19 +441,25 @@ function asmStyle() {
   G.rails.traverse(o => { if (!o.isMesh) return; const m = o.material;                     // robot rails fade back too
     m.transparent = asmOn; m.opacity = asmOn ? 0.15 : 1; m.depthWrite = !asmOn; m.needsUpdate = true; });
 }
-function asmFrame() {      // aim the camera at this step's new parts (at their final place)
+function asmFrame() {      // centre the camera on this step's parts (whole sub-assembly while it is on the bench)
+  const hostOf = o => META[o.name].sub, benchHost = ASM.map(o => isNew(o, asmK) && hostOf(o) && asmK < KIN.subs[hostOf(o)].mount ? hostOf(o) : null).find(Boolean);
+  const mountHost = Object.keys(KIN.subs).find(h => KIN.subs[h].mount === asmK);
+  const pick = o => benchHost ? (hostOf(o) === benchHost && o.userData.step <= asmK) : isNew(o, asmK);
   const box = new THREE.Box3();
-  for (const o of ASM) if (isNew(o, asmK)) {
+  for (const o of ASM) if (pick(o)) {
     const p0 = o.position.clone();
-    for (const e of [0, 1]) { o.position.copy(posAt(o, asmK, e)); o.updateMatrixWorld(true); box.expandByObject(o); }
+    for (const e of mountHost ? [1] : [0, 1]) { o.position.copy(posAt(o, asmK, e)); o.updateMatrixWorld(true); box.expandByObject(o); }
     o.position.copy(p0); o.updateMatrixWorld(true);
   }
   if (box.isEmpty()) return;
-  const c = box.getCenter(new THREE.Vector3()), r = Math.max(box.getSize(new THREE.Vector3()).length() / 2, 18);
+  const c = box.getCenter(new THREE.Vector3()), r = Math.max(box.getSize(new THREE.Vector3()).length() / 2, 10);
   const dir = camera.position.clone().sub(controls.target).normalize();
-  const t = FIT.C.clone().lerp(c, 0.65), d = THREE.MathUtils.clamp(r * 6, 330, 650);
-  anim = { p0: camera.position.clone(), t0: controls.target.clone(), p: t.clone().addScaledVector(dir, d), t, s: performance.now() };
+  const R = benchHost ? Math.max(r * 1.15, 35) : mountHost ? Math.max(r * 1.6, 70) : Math.max(r * 2.2, 75);
+  // mount: centre on where the sub-assembly ends up, far enough back that it is in view from the bench start
+  const d = fitDist(mountHost ? Math.max(R, (b_len(mountHost) + r) * 0.7) : R);
+  anim = { p0: camera.position.clone(), t0: controls.target.clone(), p: c.clone().addScaledVector(dir, d), t: c, s: performance.now() };
 }
+const b_len = h => new THREE.Vector3(...KIN.subs[h].bench).length();
 function asmShow(k) {
   asmOn = true; asmK = THREE.MathUtils.clamp(k, 0, KIN.steps.length - 1); asmT0 = performance.now(); asmStyle(); asmFrame();
   $('asmTxt').textContent = `Step ${asmK + 1}/${KIN.steps.length}: ${KIN.steps[asmK]}`;
