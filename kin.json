@@ -25,6 +25,7 @@
   "Marker base sub-assembly up to the body: the left helix enters the cavity and meshes with the right helix.",
   "Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.",
   "Marker springs onto their guide pins.",
+  "Marker spring retention cap screws 4-40 x 1/2 in from the sides of the marker base; the tip presses the spring's end coil.",
   "Bottom cover onto the marker base.",
   "Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.",
   "Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.",
@@ -59,7 +60,7 @@
    ]
   },
   "LV11 Servo Holder": {
-   "mount": 26,
+   "mount": 27,
    "bench": [
     0.0,
     0.0,
@@ -67,7 +68,7 @@
    ]
   },
   "LV11 Crossbar Arm": {
-   "mount": 31,
+   "mount": 32,
    "bench": [
     0.0,
     -170.0,

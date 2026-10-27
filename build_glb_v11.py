@@ -18,6 +18,7 @@ c15, s15 = math.cos(math.radians(15)), math.sin(math.radians(15))
 # component -> (step, approach unit vector, distance mm)
 NUT_UA = {1: 90, 2: 113, 3: 23, 4: 293}
 def plan(n):
+    if n.startswith('SHCS 4-40 x 1-2 (92196A110)'): return 7, u(-1 if n.endswith('-1') else 1, 0, 0), 35   # marker spring retention, side
     if n.startswith('SHCS 4-40 x 5-8') and not n.endswith('-1'): return 4, u(-1 if n.endswith('-2') else 1, 0, 0), 40   # spring retention, from the side
     m = re.match(r'Hex Nut 4-40 \(91841A005\)-(\d+)', n)
     if m:
@@ -123,6 +124,7 @@ SEQ = [(0, 'LV11 Torpedo Body', None, 'Torpedo body: the frame everything mounts
        ('MOUNT', MB, 'Marker base sub-assembly up to the body: the left helix enters the cavity and meshes with the right helix.'),
        (6, 'SHCS 4-40 x 1-1-2', None, 'Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.', None),
        (7, 'LV11 Spring 9435K123 (marker, loaded 27.46)', None, 'Marker springs onto their guide pins.', None),
+       (7, 'SHCS 4-40 x 1-2 (92196A110)', None, "Marker spring retention cap screws 4-40 x 1/2 in from the sides of the marker base; the tip presses the spring's end coil.", None),
        (7, 'LV11 Bottom Cover', None, 'Bottom cover onto the marker base.', None),
        (7, 'FHSCS 4-40 x 2 100deg', None, 'Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.', None),
        (7, 'FHMS 4-40 x 2-1-2 100deg', None, 'Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.', None),
@@ -201,6 +203,7 @@ BOMDEF = {   # assembly label -> (display name, kind, spec, link or None (printe
     'FHSCS 4-40 x 2 100deg': ('Flat head screw 4-40 x 2", 100 deg, 18-8', 'McMaster', '4-40 x 2" 100 deg FH', CAT['fh'], 'bottom cover C -> marker base nut'),
     'SHCS 4-40 x 1-1-2': ('Socket head screw 4-40 x 1-1/2", 18-8', 'McMaster', '4-40 x 1-1/2" SHCS', CAT['shcs'], 'marker base -> body'),
     'SHCS 4-40 x 5-8 (92196A112)': ('Socket head screw 4-40 x 5/8", 18-8', 'McMaster', '92196A112', MC + '92196A112/', 'pushing arm cross pin (1) + torpedo spring retention from the side (2)'),
+    'SHCS 4-40 x 1-2 (92196A110)': ('Socket head screw 4-40 x 1/2", 18-8', 'McMaster', '92196A110', MC + '92196A110/', 'marker spring retention, sides of the marker base'),
     'Hex Nut 4-40 (91841A005)': ('Hex nut 4-40, 18-8', 'McMaster', '91841A005', MC + '91841A005/', 'captive in traps'),
     'SHCS 8-32 x 3-4': ('Socket head screw 8-32 x 3/4", 18-8', 'McMaster', '8-32 x 3/4" SHCS', CAT['shcs'], 'servo holder ears -> body'),
     'SHCS 8-32 x 2-1-2': ('Socket head screw 8-32 x 2-1/2", 18-8', 'McMaster', '8-32 x 2-1/2" SHCS', CAT['shcs'], 'crossbar arm fork -> keel'),
