@@ -98,6 +98,46 @@ for f in sorted(SRC.glob('*.STL')):
     else:
         add(v11, 'v11__' + re.sub(r'[^A-Za-z0-9_]+', '_', n), m, colfor(n), 'v11', n)
 v11.export(OUT / 'v11.glb'); tp.export(OUT / 'torps.glb')
+# ---------- assembly procedure: one exact part per step (several instances of it allowed) ----------
+# (old coarse step, label, instance filter or None, caption)
+SEQ = [(0, 'LV11 Torpedo Body', None, 'Torpedo body: the frame everything mounts to.'),
+       (1, 'Hex Nut 4-40 (91841A005)', None, 'Captive 4-40 nuts into the body traps (top cover x4, marker base x3, bottom cover screw D).'),
+       (1, 'Hex Nut 8-32', {1, 2}, 'Captive 8-32 nuts into the body traps for the servo-holder ears.'),
+       (2, 'Right Helix Modified', None, 'Right helix into its cavity in the body through the marker-base opening (bigger than the bearings, so it goes in before its shaft).'),
+       (2, 'LV11 Torpedo Shaft', None, 'Printed torpedo shaft (18T gear end stays below) up through both bearings and the right helix; pin the helix.'),
+       (3, 'LV11 Pushing Arm', None, 'Pushing arm onto the shaft top, onto the thrust face.'),
+       (3, 'Hex Nut 4-40 (91841A005)', {10}, 'Cross-pin nut into the pushing arm pocket.'),
+       (3, 'SHCS 4-40 x 5-8 (92196A112)', None, 'Cross-pin screw through the arm and shaft into the nut.'),
+       (4, 'LV11 Spring 9435K123 (torpedo, loaded 22.41)', None, 'Torpedo springs onto their guide pins.'),
+       (5, 'LV11 Top Cover', None, 'Top cover onto the body.'),
+       (5, 'FHMS 4-40 x 1 100deg', None, 'Flat-head 4-40 x 1 screws through the top cover into the captive nuts.'),
+       (6, 'Left Helix Modified', None, 'Left helix into the cavity from below, meshing with the right helix (it is bigger than the bearing, so it goes in before its shaft).'),
+       (6, 'Hex Nut 4-40 (91841A005)', {8}, 'Captive 4-40 nut into the marker base for bottom cover screw C.'),
+       (6, 'LV11 Marker Base', None, 'Marker base up to the body joint face.'),
+       (6, 'SHCS 4-40 x 1-1-2', None, 'Socket-head 4-40 x 1-1/2 screws up through the marker base into the body nuts.'),
+       (6, 'LV11 Marker Shaft', None, 'Marker shaft (lobe end down) up through the marker-base bearing into the left helix; pin the helix.'),
+       (7, 'LV11 Spring 9435K123 (marker, loaded 27.46)', None, 'Marker springs onto their guide pins.'),
+       (7, 'LV11 Bottom Cover', None, 'Bottom cover onto the marker base.'),
+       (7, 'FHSCS 4-40 x 2 100deg', None, 'Bottom cover screw C (4-40 x 2 flat head) into the marker-base nut.'),
+       (7, 'FHMS 4-40 x 2-1-2 100deg', None, 'Bottom cover screw D (4-40 x 2-1/2 flat head) through the marker base into the body nut.'),
+       (8, 'LV11 Servo Holder', None, "Servo holder to the body's rear face."),
+       (8, 'SHCS 8-32 x 3-4', None, 'Socket-head 8-32 x 3/4 screws through the ears into the body nuts.'),
+       (9, 'SER-20XX Servo', None, 'SER-20XX servo onto its seat with 4 M3 through-bolts.'),
+       (9, 'Servogear', None, 'Servo gear onto the spline (meshes with the shaft gear).'),
+       (10, 'LV11 Crossbar Arm', None, 'Crossbar arm onto the body keel.'),
+       (10, 'Hex Nut 8-32', {3, 4}, 'Fork nuts into their recesses (captive nuts before their bolts).'),
+       (10, 'SHCS 8-32 x 2-1-2', None, 'Fork bolts 8-32 x 2-1/2 through the fork and keel into the nuts.'),
+       (10, 'Hex Nut 8-32', {5, 6}, 'Crossbar captive nuts into the side slots (crossbar screws go in on the robot).'),
+       (11, 'LV11 Torpedo D18', None, 'Load the torpedoes through the top cover; twist to lock.'),
+       (11, 'LV11 Marker P83', None, 'Load the markers up into the bottom cover; twist to lock.')]
+def newstep(m):
+    for i, (old_st, lab, inst, cap) in enumerate(SEQ):
+        if m['label'] == lab and m['step'] == old_st and (inst is None or m['inst'] in inst): return i
+    raise SystemExit('no step for ' + m['label'] + ' #' + str(m['inst']))
+for k_, v in meta.items():
+    if 'step' in v: v['step_old'] = v['step']; v['step'] = newstep(v)
+STEPS = [c for *_, c in SEQ]
+STEP_OF = {lab: i for i, (_, lab, _, _) in enumerate(SEQ)}
 old = json.load(open(OUT / 'parts.json'))
 meta.update({k: v for k, v in old.items() if k.startswith(('robot__', 'v8__', 'solo__', 'rail'))})
 json.dump(meta, open(OUT / 'parts.json', 'w'), indent=0)
@@ -173,7 +213,8 @@ for lab, (name, kind, spec, link, note) in BOMDEF.items():
         row['step_file'] = f'print/{stem} PRINT.step'; row['stl_file'] = f'print/{stem} PRINT.STL'
     else: row['link'] = link
     bom.append(row)
+EXTRA_AT = {10: [len(SEQ) - 3], 9: [STEP_OF['SER-20XX Servo']], 2: [STEP_OF['LV11 Torpedo Shaft'], STEP_OF['LV11 Marker Shaft']]}
 for name, kind, spec, link, q, note, st in EXTRA:
-    bom.append(dict(name=name, kind=kind, spec=spec, qty=q, note=note + ' (not modelled)', steps=[st], link=link, label=None))
+    bom.append(dict(name=name, kind=kind, spec=spec, qty=q, note=note + ' (not modelled)', steps=EXTRA_AT[st], link=link, label=None))
 json.dump(bom, open(OUT / 'bom.json', 'w'), indent=1)
 print('bom rows', len(bom), 'printed', sum(r['qty'] for r in bom if r['kind'] == 'printed'))

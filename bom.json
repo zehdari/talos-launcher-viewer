@@ -19,7 +19,7 @@
   "qty": 1,
   "note": "joint face on the bed",
   "steps": [
-   14
+   13
   ],
   "label": "LV11 Marker Base",
   "step_file": "print/LV11 Marker Base PRINT.step",
@@ -110,7 +110,7 @@
   "qty": 1,
   "note": "lobe end on the bed",
   "steps": [
-   11
+   15
   ],
   "label": "LV11 Marker Shaft",
   "step_file": "print/LV11 Marker Shaft PRINT.step",
@@ -149,7 +149,7 @@
   "qty": 1,
   "note": "team part, unchanged",
   "steps": [
-   12
+   11
   ],
   "label": "Left Helix Modified",
   "step_file": "print/Left Helix Modified PRINT.step",
@@ -260,7 +260,7 @@
   "qty": 3,
   "note": "marker base -> body",
   "steps": [
-   15
+   14
   ],
   "label": "SHCS 4-40 x 1-1-2",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
@@ -286,7 +286,7 @@
   "steps": [
    1,
    6,
-   13
+   12
   ],
   "label": "Hex Nut 4-40 (91841A005)",
   "link": "https://www.mcmaster.com/91841A005/"
@@ -310,7 +310,7 @@
   "qty": 2,
   "note": "crossbar arm fork -> keel",
   "steps": [
-   25
+   26
   ],
   "label": "SHCS 8-32 x 2-1-2",
   "link": "https://www.mcmaster.com/products/socket-head-screws/"
@@ -323,7 +323,7 @@
   "note": "captive in traps",
   "steps": [
    2,
-   26,
+   25,
    27
   ],
   "label": "Hex Nut 8-32",
@@ -373,7 +373,7 @@
   "note": "team pins for the right/left helix (not modelled)",
   "steps": [
    4,
-   12
+   15
   ],
   "link": "https://www.mcmaster.com/products/socket-head-screws/",
   "label": null
